@@ -1,0 +1,69 @@
+{
+  "name": "react-fetch",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "react"
+  ],
+  "homepage": "https://github.com/guoyunhe/react-fetch#readme",
+  "bugs": {
+    "url": "https://github.com/guoyunhe/react-fetch/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guoyunhe/react-fetch.git"
+  },
+  "funding": "https://github.com/sponsors/guoyunhe",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "Guo Yunhe",
+    "email": "i@guoyunhe.me"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "react-lib-scripts build",
+    "deploy": "gh-pages -d build",
+    "format": "react-lib-scripts format",
+    "lint": "react-lib-scripts lint",
+    "start": "react-lib-scripts start",
+    "test": "react-lib-scripts test",
+    "watch": "react-lib-scripts watch"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "extends": "@guoyunhe/react-lib-scripts"
+  },
+  "jest": {
+    "preset": "@guoyunhe/react-lib-scripts"
+  },
+  "devDependencies": {
+    "@guoyunhe/react-lib-scripts": "^1.0.0",
+    "@testing-library/dom": "^9.0.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.0.0",
+    "@tsconfig/vite-react": "^2.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.15.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "gh-pages": "^5.0.0",
+    "react": "^18.2.0",
+    "react-doc-ui": "^1.0.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.1.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  }
+}

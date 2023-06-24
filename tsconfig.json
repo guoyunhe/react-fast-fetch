@@ -1,0 +1,15 @@
+{
+  "extends": "@tsconfig/vite-react/tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "react-fetch": [
+        "./src"
+      ]
+    },
+    "types": [
+      "jest",
+      "@guoyunhe/react-lib-scripts/assets",
+      "@guoyunhe/react-lib-scripts/global"
+    ]
+  }
+}
