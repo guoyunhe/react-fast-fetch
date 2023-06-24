@@ -1,4 +1,4 @@
-import { ReactFetch } from 'react-fetch';
+import { ReactFetch } from '@guoyunhe/react-fetch';
 
 export default function Demo() {
   return (

@@ -1,9 +1,16 @@
 {
-  "name": "react-fetch",
+  "name": "@guoyunhe/react-fetch",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fetch and cache remote data in React apps",
   "keywords": [
-    "react"
+    "react",
+    "fetch",
+    "axios",
+    "cache",
+    "local-storage",
+    "session-storage",
+    "idb",
+    "indexeddb"
   ],
   "homepage": "https://github.com/guoyunhe/react-fetch#readme",
   "bugs": {
@@ -14,7 +21,7 @@
     "url": "git+https://github.com/guoyunhe/react-fetch.git"
   },
   "funding": "https://github.com/sponsors/guoyunhe",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "author": {
     "name": "Guo Yunhe",
     "email": "i@guoyunhe.me"
