@@ -5,3 +5,9 @@ export interface Store {
   set: (url: string, data: any) => Promise<void>;
   has: (url: string) => Promise<boolean>;
 }
+
+export interface StoreEntry {
+  url: string;
+  data: any;
+  timestamp: number;
+}
