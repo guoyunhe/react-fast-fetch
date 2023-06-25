@@ -17,7 +17,7 @@ export enum DataStatus {
   // Read from local cache
   Stale,
   // Fetched from remote
-  Loaded,
+  Valid,
 }
 
 export enum LoadStatus {
