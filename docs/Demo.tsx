@@ -1,9 +1,10 @@
-import { ReactFetch } from '@guoyunhe/react-fetch';
+import { useFetch } from '@guoyunhe/react-fetch';
 
 export default function Demo() {
+  const { data } = useFetch('');
   return (
     <div>
-      <ReactFetch>Hello</ReactFetch>
+      <div>Hello</div>
     </div>
   );
 }
