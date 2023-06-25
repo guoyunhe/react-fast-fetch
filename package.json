@@ -64,6 +64,7 @@
     "@types/node": "^18.16.18",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "axios": "^1.4.0",
     "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-doc-ui": "^1.0.1",

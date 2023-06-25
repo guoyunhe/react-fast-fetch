@@ -1,5 +1,11 @@
 import { DBSchema, IDBPDatabase, openDB } from 'idb';
-import { Store, StoreEntry } from '../types';
+import { Store } from '../types';
+
+export interface StoreEntry {
+  url: string;
+  data: any;
+  timestamp: number;
+}
 
 interface Schema extends DBSchema {
   store: {
@@ -54,7 +60,6 @@ export class IndexedDBStore implements Store {
     }
     this.db = await openDB<Schema>(this.dbName, this.dbVersion, {
       upgrade: (db, oldVersion, newVersion) => {
-        console.log(oldVersion, newVersion);
         if (oldVersion === 0) {
           const store = db.createObjectStore('store', {
             keyPath: 'url',
@@ -71,7 +76,12 @@ export class IndexedDBStore implements Store {
     }
     await this.init();
     const value = await this.db?.get('store', url);
-    return !!value;
+    if (value) {
+      this.map.set(url, value); // cache in memory
+      return true;
+    } else {
+      return false;
+    }
   }
 
   async get(url: string) {
@@ -81,12 +91,15 @@ export class IndexedDBStore implements Store {
     }
     await this.init();
     const value = await this.db?.get('store', url);
+    if (value) {
+      this.map.set(url, value); // cache in memory
+    }
     return value?.data;
   }
 
   async set(url: string, data: any) {
     const value = { url, data, timestamp: Date.now() };
-    this.map.set(url, value);
+    this.map.set(url, value); // cache in memory
     await this.init();
     await this.db?.put('store', value);
   }

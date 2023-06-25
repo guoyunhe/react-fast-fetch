@@ -6,8 +6,23 @@ export interface Store {
   has: (url: string) => Promise<boolean>;
 }
 
-export interface StoreEntry {
-  url: string;
-  data: any;
-  timestamp: number;
+export interface FetchConfig {
+  fetcher: Fetcher;
+  store: Store;
+}
+
+export enum DataStatus {
+  // Not fetched yet
+  Absent,
+  // Read from local cache
+  Stale,
+  // Fetched from remote
+  Loaded,
+}
+
+export enum LoadStatus {
+  Idle,
+  Loading,
+  Done,
+  Failed,
 }

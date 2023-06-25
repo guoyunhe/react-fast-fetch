@@ -6,6 +6,7 @@ import demoCode from './Demo.tsx?raw';
 
 const store = new IndexedDBStore();
 store.set('/foo', { foo: 'bar' });
+
 export default function App() {
   return (
     <DocContainer>
