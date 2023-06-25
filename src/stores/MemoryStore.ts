@@ -1,5 +1,11 @@
 import { Store } from '../types';
 
+interface StoreEntry {
+  url: string;
+  data: any;
+  timestamp: number;
+}
+
 export interface MemoryStoreOptions {
   /**
    * Maximum number of records in the Map
@@ -10,7 +16,7 @@ export interface MemoryStoreOptions {
 }
 
 export class MemoryStore implements Store {
-  map: Map<string, any>;
+  map: Map<string, StoreEntry>;
 
   limit = 1000;
 
@@ -18,7 +24,7 @@ export class MemoryStore implements Store {
     if (options?.limit) {
       this.limit = options.limit;
     }
-    this.map = new Map();
+    this.map = new Map<string, StoreEntry>();
   }
 
   async has(url: string) {

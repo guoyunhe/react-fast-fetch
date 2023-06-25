@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useFetchConfig } from '.';
+import { useFetchConfig } from './FetchConfigContext';
 import { DataStatus, FetchConfig, LoadStatus } from './types';
 
 export interface UseFetchReturn<T> {

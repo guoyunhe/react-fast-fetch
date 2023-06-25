@@ -1,7 +1,7 @@
 import { DBSchema, IDBPDatabase, openDB } from 'idb';
 import { Store } from '../types';
 
-export interface StoreEntry {
+interface StoreEntry {
   url: string;
   data: any;
   timestamp: number;
@@ -34,13 +34,13 @@ export interface IndexedDBStoreOptions {
 
 export class IndexedDBStore implements Store {
   // Memory cache for faster access
-  private map: Map<string, StoreEntry>;
+  map: Map<string, StoreEntry>;
   // Persist cache in IndexedDB
-  private db: IDBPDatabase<Schema> | null = null;
+  db: IDBPDatabase<Schema> | null = null;
 
   dbName = 'react_fetch';
-  readonly dbVersion = 1;
-  readonly storeName = 'store';
+  dbVersion = 1;
+  storeName = 'store';
   limit = 1000;
 
   constructor(options?: IndexedDBStoreOptions) {
@@ -50,7 +50,7 @@ export class IndexedDBStore implements Store {
     if (options?.limit) {
       this.limit = options.limit;
     }
-    this.map = new Map();
+    this.map = new Map<string, StoreEntry>();
     this.init();
   }
 
