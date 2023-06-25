@@ -59,7 +59,7 @@ export class IndexedDBStore implements Store {
       return;
     }
     this.db = await openDB<Schema>(this.dbName, this.dbVersion, {
-      upgrade: (db, oldVersion, newVersion) => {
+      upgrade: (db, oldVersion) => {
         if (oldVersion === 0) {
           const store = db.createObjectStore('store', {
             keyPath: 'url',

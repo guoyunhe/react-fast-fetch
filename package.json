@@ -54,11 +54,15 @@
   "jest": {
     "preset": "@guoyunhe/react-lib-scripts"
   },
+  "dependencies": {
+    "idb": "^7.1.1"
+  },
   "devDependencies": {
     "@guoyunhe/react-lib-scripts": "^1.4.0",
     "@testing-library/dom": "^9.3.1",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@tsconfig/strictest": "^2.0.1",
     "@tsconfig/vite-react": "^2.0.0",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
@@ -73,8 +77,5 @@
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  },
-  "dependencies": {
-    "idb": "^7.1.1"
   }
 }
