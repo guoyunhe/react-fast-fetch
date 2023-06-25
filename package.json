@@ -1,6 +1,6 @@
 {
   "name": "@guoyunhe/react-fetch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fetch and cache remote data in React apps",
   "keywords": [
     "react",
