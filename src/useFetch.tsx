@@ -74,14 +74,14 @@ export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): Us
   }, [fetcher, store, url]);
 
   useEffect(() => {
-    let refreshed = false;
+    let loaded = false;
     store
       .has(url)
       .then((exist) => {
         if (exist) {
           // read cache
           store.get(url).then((data) => {
-            if (!refreshed) {
+            if (!loaded) {
               // avoid cached data overriding remote data
               setDataStatus(DataStatus.Stale);
               setData(data);
@@ -90,13 +90,13 @@ export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): Us
         }
         // refresh data
         load().then(() => {
-          refreshed = true;
+          loaded = true;
         });
       })
       .catch((e) => {
         // refresh data
         load().then(() => {
-          refreshed = true;
+          loaded = true;
         });
         throw e;
       });
