@@ -1,5 +1,5 @@
 {
-  "name": "@guoyunhe/react-fetch",
+  "name": "react-fast-fetch",
   "version": "1.0.1",
   "description": "Fetch and cache remote data in React apps",
   "keywords": [
@@ -12,13 +12,13 @@
     "idb",
     "indexeddb"
   ],
-  "homepage": "https://github.com/guoyunhe/react-fetch#readme",
+  "homepage": "https://github.com/guoyunhe/react-fast-fetch#readme",
   "bugs": {
-    "url": "https://github.com/guoyunhe/react-fetch/issues"
+    "url": "https://github.com/guoyunhe/react-fast-fetch/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/guoyunhe/react-fetch.git"
+    "url": "git+https://github.com/guoyunhe/react-fast-fetch.git"
   },
   "funding": "https://github.com/sponsors/guoyunhe",
   "license": "MIT",

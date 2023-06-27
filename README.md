@@ -1,4 +1,4 @@
-# @guoyunhe/react-fetch
+# react-fast-fetch
 
 Fetch and cache remote data in React apps. Make your app load faster.
 
@@ -20,13 +20,13 @@ Why not localStorage?
 ## Install
 
 ```bash
-npm i @guoyunhe/react-fetch
+npm i react-fast-fetch
 ```
 
 ## Usage
 
 ```jsx
-import { FetchConfigProvider, IndexedDBStore, useFetch } from '@guoyunhe/react-fetch';
+import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
 import axios from 'axios';
 
 const fetcher = url => axios.get(url).then(res => res.data)

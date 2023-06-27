@@ -1,4 +1,4 @@
-import { useFetch } from '@guoyunhe/react-fetch';
+import { useFetch } from 'react-fast-fetch';
 
 export default function Demo() {
   const { data } = useFetch('');
