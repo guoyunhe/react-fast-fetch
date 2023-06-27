@@ -1,6 +1,6 @@
-# react-fetch
+# @guoyunhe/react-fetch
 
-Fetch and cache remote data in React apps.
+Fetch and cache remote data in React apps. Make your app load faster.
 
 HTTP client adaptors:
 
