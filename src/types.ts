@@ -19,10 +19,3 @@ export enum DataStatus {
   // Fetched from remote
   Valid,
 }
-
-export enum LoadStatus {
-  Idle,
-  Loading,
-  Done,
-  Failed,
-}
