@@ -25,8 +25,23 @@ npm i @guoyunhe/react-fetch
 
 ## Usage
 
-```ts
-import { hello } from '@guoyunhe/react-fetch';
+```jsx
+import { FetchConfigProvider, IndexedDBStore, useFetch } from '@guoyunhe/react-fetch';
+import axios from 'axios';
 
-hello('world');
+const fetcher = url => axios.get(url).then(res => res.data)
+const store = new IndexedDBStore({ limit: 10000 });
+
+function App() {
+  return <FetchConfigProvider fetcher={fetcher} store={store}>
+    <Posts/>
+  </FetchConfigProvider>;
+}
+
+function Posts {
+  const { data } = useFetch('/posts?query=hello');
+  return <div>
+    {data?.map(post => <div key={post.id}>{post.title}</div>)}
+  <div>;
+}
 ```
