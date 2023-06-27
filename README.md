@@ -42,9 +42,10 @@ function App() {
 }
 
 function Posts {
-  const { data } = useFetch('/posts?query=hello');
+  const { data, loading } = useFetch('/posts?query=hello');
   return (
     <div>
+      {loading && <span>Loading...</span>}
       {data?.map(post => <div key={post.id}>{post.title}</div>)}
     <div>
   );
