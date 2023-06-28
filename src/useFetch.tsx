@@ -52,7 +52,6 @@ export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): Us
     } catch (e) {
       setLoading(false);
       setError(e);
-      throw e;
     }
   }, [fetcher, store, url]);
 
@@ -69,38 +68,29 @@ export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): Us
     } catch (e) {
       setReloading(false);
       setError(e);
-      throw e;
     }
   }, [fetcher, store, url]);
 
   useEffect(() => {
-    let loaded = false;
-    store
-      .has(url)
-      .then((exist) => {
-        if (exist) {
-          // read cache
-          store.get(url).then((data) => {
-            if (!loaded) {
-              // avoid cached data overriding remote data
-              setDataStatus(DataStatus.Stale);
-              setData(data);
-            }
-          });
-        }
-        // refresh data
-        load().then(() => {
+    store.has(url).then((exist) => {
+      if (exist) {
+        // read cache
+        let loaded = false;
+        store.get(url).then((data) => {
+          if (!loaded) {
+            // avoid cached data overriding remote data
+            setDataStatus(DataStatus.Stale);
+            setData(data);
+          }
+        });
+        reload().then(() => {
           loaded = true;
         });
-      })
-      .catch((e) => {
-        // refresh data
-        load().then(() => {
-          loaded = true;
-        });
-        throw e;
-      });
-  }, [url, store, load]);
+      } else {
+        load();
+      }
+    });
+  }, [url, store, load, reload]);
 
   return {
     data,

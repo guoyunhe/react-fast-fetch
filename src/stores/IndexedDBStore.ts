@@ -120,22 +120,27 @@ export class IndexedDBStore implements Store {
     try {
       await this.init();
       await this.db?.put('store', value);
+      await this.clean();
     } catch (e) {
       this.error('Failed to write IndexedDB', e);
     }
   }
 
   async clean() {
-    const count = (await this.db?.count('store')) || 0;
-    const deleteCount = count - this.limit;
-    if (deleteCount > 0) {
-      const store = this.db?.transaction('store', 'readwrite').objectStore('store');
-      const index = store?.index('timestamp');
-      const cursor = await index?.openCursor();
-      for (let i = 0; i < deleteCount; i++) {
-        await cursor?.delete();
-        await cursor?.continue();
+    try {
+      const count = (await this.db?.count('store')) || 0;
+      const deleteCount = count - this.limit;
+      if (deleteCount > 0) {
+        const store = this.db?.transaction('store', 'readwrite').objectStore('store');
+        const index = store?.index('timestamp');
+        const cursor = await index?.openCursor();
+        for (let i = 0; i < deleteCount; i++) {
+          await cursor?.delete();
+          await cursor?.continue();
+        }
       }
+    } catch (e) {
+      this.error('Failed to clean IndexedDB', e);
     }
   }
 }
