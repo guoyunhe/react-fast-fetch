@@ -54,32 +54,45 @@ export class IndexedDBStore implements Store {
     this.init();
   }
 
+  error(...args: any[]) {
+    console.error(PACKAGE_NAME, 'IndexedDB', ...args);
+  }
+
   async init() {
     if (this.db) {
       return;
     }
-    this.db = await openDB<Schema>(this.dbName, this.dbVersion, {
-      upgrade: (db, oldVersion) => {
-        if (oldVersion === 0) {
-          const store = db.createObjectStore('store', {
-            keyPath: 'url',
-          });
-          store.createIndex('timestamp', 'timestamp');
-        }
-      },
-    });
+    try {
+      this.db = await openDB<Schema>(this.dbName, this.dbVersion, {
+        upgrade: (db, oldVersion) => {
+          if (oldVersion === 0) {
+            const store = db.createObjectStore('store', {
+              keyPath: 'url',
+            });
+            store.createIndex('timestamp', 'timestamp');
+          }
+        },
+      });
+    } catch (e) {
+      this.error('Failed to init IndexedDB', e);
+    }
   }
 
   async has(url: string) {
     if (this.map.has(url)) {
       return true;
     }
-    await this.init();
-    const value = await this.db?.get('store', url);
-    if (value) {
-      this.map.set(url, value); // cache in memory
-      return true;
-    } else {
+    try {
+      await this.init();
+      const value = await this.db?.get('store', url);
+      if (value) {
+        this.map.set(url, value); // cache in memory
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      this.error('Failed to read IndexedDB', e);
       return false;
     }
   }
@@ -89,18 +102,26 @@ export class IndexedDBStore implements Store {
     if (memoryValue) {
       return memoryValue.data;
     }
-    await this.init();
-    const value = await this.db?.get('store', url);
-    if (value) {
-      this.map.set(url, value); // cache in memory
+    try {
+      await this.init();
+      const value = await this.db?.get('store', url);
+      if (value) {
+        this.map.set(url, value); // cache in memory
+      }
+      return value?.data;
+    } catch (e) {
+      this.error('Failed to read IndexedDB', e);
     }
-    return value?.data;
   }
 
   async set(url: string, data: any) {
     const value = { url, data, timestamp: Date.now() };
     this.map.set(url, value); // cache in memory
-    await this.init();
-    await this.db?.put('store', value);
+    try {
+      await this.init();
+      await this.db?.put('store', value);
+    } catch (e) {
+      this.error('Failed to write IndexedDB', e);
+    }
   }
 }
