@@ -29,25 +29,27 @@ npm i react-fast-fetch
 import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
 import axios from 'axios';
 
-const fetcher = url => axios.get(url).then(res => res.data);
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const store = new IndexedDBStore({ limit: 10000 });
 
 function App() {
   return (
     <FetchConfigProvider fetcher={fetcher} store={store}>
-      <Posts/>
+      <Posts />
     </FetchConfigProvider>
   );
 }
 
-function Posts {
+function Posts() {
   const { data, loading } = useFetch('/posts?query=hello');
   return (
     <div>
       {loading && <span>Loading...</span>}
-      {data?.map(post => <div key={post.id}>{post.title}</div>)}
-    <div>
+      {data?.map((post) => (
+        <div key={post.id}>{post.title}</div>
+      ))}
+    </div>
   );
 }
 ```
