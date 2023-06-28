@@ -38,7 +38,7 @@ export class IndexedDBStore implements Store {
   // Persist cache in IndexedDB
   db: IDBPDatabase<Schema> | null = null;
 
-  dbName = 'react_fetch';
+  dbName = 'react_fast_fetch';
   dbVersion = 1;
   storeName = 'store';
   limit = 1000;
