@@ -54,17 +54,23 @@ function Posts() {
 }
 ```
 
-## API
+## Config
 
-### FetchConfigProvider
-
-Define global config for the fetch hook.
+Here are two ways to configure react-fast-fetch.
 
 ```jsx
-<FetchConfigProvider fetcher={...} store={...}>...</FetchConfigProvider>
+// Use global config, recommended
+<FetchConfigProvider fetcher={fetcher} store={store}>
+  ...
+</FetchConfigProvider>;
+
+// Use local config, for flexibility
+const { data } = useFetch('/url', { fetcher: customFetcher, store: customStore });
 ```
 
-#### fetcher
+Both ways supports the following configuration:
+
+### fetcher
 
 Fetch remote API data. This prop allows you to use different HTTP client libraries.
 
@@ -82,7 +88,7 @@ import axios from 'axios';
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 ```
 
-#### store
+### store
 
 Cache data in various storage. There are two built-in stores:
 
