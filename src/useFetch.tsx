@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
 import { DataStatus, FetchConfig } from './types';
 
@@ -33,6 +33,11 @@ export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): Us
   const config = useFetchConfig();
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
+
+  // Remember the URL and compare in async functions
+  const urlRef = useRef(url);
+  urlRef.current = url;
+
   const [data, setData] = useState<T>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(false);
@@ -41,29 +46,39 @@ export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): Us
 
   // initial fetch data from remote
   const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+    if (url === urlRef.current) {
+      setLoading(true);
+      setError(null);
+    }
     try {
       const data = await fetcher(url);
-      setDataStatus(DataStatus.Valid);
-      setLoading(false);
-      setData(data);
+      if (url === urlRef.current) {
+        setLoading(false);
+        setDataStatus(DataStatus.Valid);
+        setData(data);
+      }
       store.set(url, data); // update cache
     } catch (e) {
-      setLoading(false);
-      setError(e);
+      if (url === urlRef.current) {
+        setLoading(false);
+        setError(e);
+      }
     }
   }, [fetcher, store, url]);
 
   // refresh data from remote
   const reload = useCallback(async () => {
-    setReloading(true);
-    setError(null);
+    if (url === urlRef.current) {
+      setReloading(true);
+      setError(null);
+    }
     try {
       const data = await fetcher(url);
-      setDataStatus(DataStatus.Valid);
-      setData(data);
-      setReloading(false);
+      if (url === urlRef.current) {
+        setDataStatus(DataStatus.Valid);
+        setData(data);
+        setReloading(false);
+      }
       store.set(url, data); // update cache
     } catch (e) {
       setReloading(false);
@@ -77,7 +92,7 @@ export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): Us
         // read cache
         let loaded = false;
         store.get(url).then((data) => {
-          if (!loaded) {
+          if (!loaded && url === urlRef.current) {
             // avoid cached data overriding remote data
             setDataStatus(DataStatus.Stale);
             setData(data);
