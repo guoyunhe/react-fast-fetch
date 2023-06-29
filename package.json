@@ -1,6 +1,6 @@
 {
   "name": "react-fast-fetch",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Fetch and cache remote data in React apps",
   "keywords": [
     "react",
