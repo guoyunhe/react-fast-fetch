@@ -2,11 +2,19 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
 import { DataStatus, FetchConfig } from './types';
 
-export interface UseFetchConfig extends Partial<FetchConfig> {
+export interface UseFetchOptions<T> extends Partial<FetchConfig> {
   /**
-   * Disable data fetching
+   * Disable data fetching. This is useful when some parameters is required to fetch data.
    */
   disabled?: boolean;
+  /**
+   * Callback when the intial load is done.
+   */
+  onLoad?: (url: string, data: T) => void;
+  /**
+   * Callback when data is reloaded.
+   */
+  onReload?: (url: string, data: T) => void;
 }
 
 export interface UseFetchReturn<T> {
@@ -36,15 +44,19 @@ export interface UseFetchReturn<T> {
   reloading: boolean;
 }
 
-export function useFetch<T>(url: string, options: UseFetchConfig = {}): UseFetchReturn<T> {
+export function useFetch<T>(url: string, options: UseFetchOptions<T> = {}): UseFetchReturn<T> {
   const config = useFetchConfig();
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
-  const { disabled } = options;
+  const { disabled, onLoad, onReload } = options;
 
-  // Remember the URL and compare in async functions
+  // Remember these props and use in async functions
   const urlRef = useRef(url);
   urlRef.current = url;
+  const onLoadRef = useRef(onLoad);
+  onLoadRef.current = onLoad;
+  const onReloadRef = useRef(onReload);
+  onReloadRef.current = onReload;
 
   const [data, setData] = useState<T>();
   const [error, setError] = useState<any>();
@@ -64,6 +76,7 @@ export function useFetch<T>(url: string, options: UseFetchConfig = {}): UseFetch
         setLoading(false);
         setDataStatus(DataStatus.Valid);
         setData(data);
+        onLoadRef.current?.(urlRef.current, data);
       }
       store.set(url, data); // update cache
     } catch (e) {
@@ -86,6 +99,7 @@ export function useFetch<T>(url: string, options: UseFetchConfig = {}): UseFetch
         setDataStatus(DataStatus.Valid);
         setData(data);
         setReloading(false);
+        onReloadRef.current?.(urlRef.current, data);
       }
       store.set(url, data); // update cache
     } catch (e) {

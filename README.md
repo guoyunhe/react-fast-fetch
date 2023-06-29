@@ -103,3 +103,40 @@ const store = new MemoryStore({ limit: 10000 });
 ```js
 const store = new IndexedDBStore({ dbName: 'my_app_fetch_data', limit: 10000 });
 ```
+
+## Options
+
+### disabled
+
+Disable data fetching. This is useful when some parameters is required to fetch data.
+
+```js
+const [page, setPage] = useState(1);
+const { data } = useFetch(`/posts?page=${page}`, { disabled: page < 1 });
+```
+
+### onLoad
+
+Callback when the intial load is done.
+
+```js
+const [page, setPage] = useState(1);
+const { data } = useFetch(`/posts?page=${page}`, {
+  onLoad: (url, data) => {
+    console.log(url, data);
+  },
+});
+```
+
+### onReload
+
+Callback when data is reloaded.
+
+```js
+const [page, setPage] = useState(1);
+const { data } = useFetch(`/posts?page=${page}`, {
+  onReload: (url, data) => {
+    console.log(url, data);
+  },
+});
+```
