@@ -2,6 +2,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
 import { DataStatus, FetchConfig } from './types';
 
+export interface UseFetchConfig extends Partial<FetchConfig> {
+  /**
+   * Disable data fetching
+   */
+  disabled?: boolean;
+}
+
 export interface UseFetchReturn<T> {
   /**
    * Fetched data, load immediately from cache and then reload from remote
@@ -29,10 +36,11 @@ export interface UseFetchReturn<T> {
   reloading: boolean;
 }
 
-export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): UseFetchReturn<T> {
+export function useFetch<T>(url: string, options: UseFetchConfig = {}): UseFetchReturn<T> {
   const config = useFetchConfig();
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
+  const { disabled } = options;
 
   // Remember the URL and compare in async functions
   const urlRef = useRef(url);
@@ -87,25 +95,34 @@ export function useFetch<T>(url: string, options: Partial<FetchConfig> = {}): Us
   }, [fetcher, store, url]);
 
   useEffect(() => {
-    store.has(url).then((exist) => {
-      if (exist) {
-        // read cache
-        let loaded = false;
-        store.get(url).then((data) => {
-          if (!loaded && url === urlRef.current) {
-            // avoid cached data overriding remote data
-            setDataStatus(DataStatus.Stale);
-            setData(data);
-          }
-        });
-        reload().then(() => {
-          loaded = true;
-        });
-      } else {
-        load();
-      }
-    });
-  }, [url, store, load, reload]);
+    if (!disabled) {
+      setLoading(false);
+      setReloading(false);
+      setDataStatus(DataStatus.Absent);
+      setData(undefined);
+      setError(undefined);
+      store.has(url).then((exist) => {
+        if (exist) {
+          // read cache
+          let loaded = false;
+          store.get(url).then((data) => {
+            if (!loaded && url === urlRef.current) {
+              // avoid cached data overriding remote data
+              setDataStatus(DataStatus.Stale);
+              setData(data);
+            }
+          });
+          // reload remote data
+          reload().then(() => {
+            loaded = true;
+          });
+        } else {
+          // initial load
+          load();
+        }
+      });
+    }
+  }, [url, store, load, reload, disabled]);
 
   return {
     data,

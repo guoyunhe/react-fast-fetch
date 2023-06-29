@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
 
-const fetcher = async (url: string) => [
-  { id: 1, title: 'foo' },
-  { id: 2, title: 'bar' },
-];
+const fetcher = () =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, title: 'foo ' + Math.random() },
+        { id: 2, title: 'bar ' + Math.random() },
+      ]);
+    }, 2000);
+  });
 
 const store = new IndexedDBStore({ limit: 10 });
 
@@ -18,10 +23,13 @@ export default function App() {
 
 function Posts() {
   const [page, setPage] = useState(1);
-  const { data, loading } = useFetch<{ id: number; title: string }[]>(`/posts?page=${page}`);
+  const { data, loading } = useFetch<{ id: number; title: string }[]>(`/posts?page=${page}`, {
+    disabled: page < 1,
+  });
   return (
     <div>
       <button onClick={() => setPage((prev) => prev - 1)}>Prev</button>
+      {page}
       <button onClick={() => setPage((prev) => prev + 1)}>Next</button>
       {loading && <span>Loading...</span>}
       {data?.map((post) => (
