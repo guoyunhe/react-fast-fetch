@@ -42,6 +42,10 @@ export interface UseFetchReturn<T> {
    * Reloading from remote
    */
   reloading: boolean;
+  /**
+   * Remove data from store. Call it when you delete the resource from remote.
+   */
+  remove: () => Promise<void>;
 }
 
 export function useFetch<T>(url: string, options: UseFetchOptions<T> = {}): UseFetchReturn<T> {
@@ -108,6 +112,10 @@ export function useFetch<T>(url: string, options: UseFetchOptions<T> = {}): UseF
     }
   }, [fetcher, store, url]);
 
+  const remove = useCallback(async () => {
+    store.remove(url);
+  }, [store, url]);
+
   useEffect(() => {
     if (!disabled) {
       setLoading(false);
@@ -143,6 +151,7 @@ export function useFetch<T>(url: string, options: UseFetchOptions<T> = {}): UseF
     error,
     dataStatus,
     reload,
+    remove,
     loading,
     reloading,
   };

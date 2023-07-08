@@ -38,4 +38,8 @@ export class MemoryStore implements Store {
   async set(url: string, data: any) {
     this.map.set(url, { url, data, timestamp: Date.now() });
   }
+
+  async remove(url: string) {
+    this.map.delete(url);
+  }
 }

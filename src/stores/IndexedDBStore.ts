@@ -143,4 +143,14 @@ export class IndexedDBStore implements Store {
       this.error('Failed to clean IndexedDB', e);
     }
   }
+
+  async remove(url: string) {
+    this.map.delete(url);
+    try {
+      await this.init();
+      await this.db?.delete('store', url);
+    } catch (e) {
+      this.error('Failed to write IndexedDB', e);
+    }
+  }
 }
