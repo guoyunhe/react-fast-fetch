@@ -4,14 +4,16 @@ import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch'
 const fetcher = () =>
   new Promise((resolve) => {
     setTimeout(() => {
-      resolve([
-        { id: 1, title: 'foo ' + Math.random() },
-        { id: 2, title: 'bar ' + Math.random() },
-      ]);
-    }, 2000);
+      const data = [];
+      for (let i = 0; i < 10000; i++) {
+        const obj = { id: i, title: 'foobar ' + Math.random() };
+        data.push(obj);
+      }
+      resolve(data);
+    }, 500);
   });
 
-const store = new IndexedDBStore({ limit: 10 });
+const store = new IndexedDBStore({ limit: 10000 });
 
 export default function App() {
   return (
@@ -26,15 +28,24 @@ function Posts() {
   const { data, loading } = useFetch<{ id: number; title: string }[]>(`/posts?page=${page}`, {
     disabled: page < 1,
   });
+  const { data: data2 } = useFetch<{ id: number; title: string }[]>(`/comments?page=${page}`, {
+    disabled: page < 1,
+  });
+  const { data: data3 } = useFetch<{ id: number; title: string }[]>(`/what?page=${page}`, {
+    disabled: page < 1,
+  });
+  const { data: data4 } = useFetch<{ id: number; title: string }[]>(`/the?page=${page}`, {
+    disabled: page < 1,
+  });
+  const { data: data5 } = useFetch<{ id: number; title: string }[]>(`/fuck?page=${page}`, {
+    disabled: page < 1,
+  });
   return (
     <div>
       <button onClick={() => setPage((prev) => prev - 1)}>Prev</button>
       {page}
       <button onClick={() => setPage((prev) => prev + 1)}>Next</button>
       {loading && <span>Loading...</span>}
-      {data?.map((post) => (
-        <div key={post.id}>{post.title}</div>
-      ))}
     </div>
   );
 }
