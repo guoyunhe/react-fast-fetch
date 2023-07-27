@@ -71,14 +71,11 @@ export function useFetch<T>(url: string, options: UseFetchOptions<T> = {}): UseF
 
   // refresh data from remote
   const reload = useCallback(() => {
-    console.log('reload');
     if (url === urlRef.current) {
       if (loadedUrlRef.current === urlRef.current) {
-        console.log('reloading');
         setReloading(true);
         setLoading(false);
       } else {
-        console.log('loading');
         setLoading(true);
         setReloading(false);
       }
