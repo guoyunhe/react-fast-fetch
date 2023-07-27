@@ -64,16 +64,16 @@
     "@testing-library/user-event": "^14.4.3",
     "@tsconfig/strictest": "^2.0.1",
     "@tsconfig/vite-react": "^2.0.0",
-    "@types/jest": "^29.5.2",
-    "@types/node": "^20.3.2",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.5",
+    "@types/react": "^18.2.17",
+    "@types/react-dom": "^18.2.7",
     "axios": "^1.4.0",
     "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-doc-ui": "^1.0.1",
     "react-dom": "^18.2.0",
-    "typescript": "^5.1.5"
+    "typescript": "^5.1.6"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
