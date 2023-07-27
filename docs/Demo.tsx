@@ -5,7 +5,7 @@ const fetcher = () =>
   new Promise((resolve) => {
     setTimeout(() => {
       const data = [];
-      for (let i = 0; i < 10000; i++) {
+      for (let i = 0; i < 10; i++) {
         const obj = { id: i, title: 'foobar ' + Math.random() };
         data.push(obj);
       }
@@ -25,27 +25,24 @@ export default function App() {
 
 function Posts() {
   const [page, setPage] = useState(1);
-  const { data, loading } = useFetch<{ id: number; title: string }[]>(`/posts?page=${page}`, {
-    disabled: page < 1,
-  });
-  const { data: data2 } = useFetch<{ id: number; title: string }[]>(`/comments?page=${page}`, {
-    disabled: page < 1,
-  });
-  const { data: data3 } = useFetch<{ id: number; title: string }[]>(`/what?page=${page}`, {
-    disabled: page < 1,
-  });
-  const { data: data4 } = useFetch<{ id: number; title: string }[]>(`/the?page=${page}`, {
-    disabled: page < 1,
-  });
-  const { data: data5 } = useFetch<{ id: number; title: string }[]>(`/fuck?page=${page}`, {
-    disabled: page < 1,
-  });
+  const { data, loading, reloading } = useFetch<{ id: number; title: string }[]>(
+    `/posts?page=${page}`,
+    {
+      disabled: page < 1,
+    }
+  );
   return (
     <div>
       <button onClick={() => setPage((prev) => prev - 1)}>Prev</button>
       {page}
       <button onClick={() => setPage((prev) => prev + 1)}>Next</button>
       {loading && <span>Loading...</span>}
+      {reloading && <span>Reloading...</span>}
+      <ul>
+        {data?.map((item) => (
+          <li key={item.id}>{item.title}</li>
+        ))}
+      </ul>
     </div>
   );
 }
