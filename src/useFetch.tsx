@@ -8,6 +8,10 @@ export interface UseFetchOptions<T> extends Partial<FetchConfig> {
    */
   disabled?: boolean;
   /**
+   * Auto-reload interval in milliseconds
+   */
+  interval?: number;
+  /**
    * Callback when the intial load is done.
    */
   onLoad?: (url: string, data: T) => void;
@@ -52,7 +56,7 @@ export function useFetch<T>(url: string, options: UseFetchOptions<T> = {}): UseF
   const config = useFetchConfig();
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
-  const { disabled, onLoad, onReload } = options;
+  const { disabled, interval, onLoad, onReload } = options;
 
   // Remember these props and use in async functions
   const urlRef = useRef(url);
@@ -125,6 +129,16 @@ export function useFetch<T>(url: string, options: UseFetchOptions<T> = {}): UseF
       });
     }
   }, [url, store, reload, disabled]);
+
+  useEffect(() => {
+    let timer = 0;
+    if (!disabled && interval) {
+      timer = window.setInterval(reload, interval);
+    }
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [reload, disabled, interval]);
 
   return {
     data,

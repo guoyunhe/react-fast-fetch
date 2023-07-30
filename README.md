@@ -115,6 +115,14 @@ const [page, setPage] = useState(1);
 const { data } = useFetch(`/posts?page=${page}`, { disabled: page < 1 });
 ```
 
+### interval
+
+Auto-reload data in N milliseconds. Use it to keep data up-to-date.
+
+```js
+const { data } = useFetch(`/notifications/unread`, { interval: 5000 });
+```
+
 ### onLoad
 
 Callback when the intial load is done.

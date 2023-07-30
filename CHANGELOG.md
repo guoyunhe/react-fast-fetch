@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 - 2023-07-30
+
+- Added `interval` option to `useFetch()` hook
+
 ## 1.2.0 - 2023-07-27
 
 - Changed to immediately fetch remote data without check cache existance. This is because IndexedDB

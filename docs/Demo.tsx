@@ -29,6 +29,7 @@ function Posts() {
     `/posts?page=${page}`,
     {
       disabled: page < 1,
+      interval: 3000,
     }
   );
   return (
