@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0 - 2023-09-15
+
+- Added `<Fetch/>` component to use in class components. Note: it is only a thin wrapper around the
+  `useFetch()` hook
+
 ## 1.3.0 - 2023-07-30
 
 - Added `interval` option to `useFetch()` hook
