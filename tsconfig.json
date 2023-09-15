@@ -11,5 +11,6 @@
       "@guoyunhe/react-lib-scripts/assets",
       "@guoyunhe/react-lib-scripts/global"
     ]
-  }
+  },
+  "exclude": ["dist"]
 }

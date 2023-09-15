@@ -20,3 +20,24 @@ export enum DataStatus {
   // Fetched from remote
   Valid,
 }
+
+export type OnLoad<T> = (url: string, data: T) => void;
+
+export interface FetchOptions<T> extends Partial<FetchConfig> {
+  /**
+   * Disable data fetching. This is useful when some parameters is required to fetch data.
+   */
+  disabled?: boolean;
+  /**
+   * Auto-reload interval in milliseconds
+   */
+  interval?: number;
+  /**
+   * Callback when the intial load is done.
+   */
+  onLoad?: OnLoad<T>;
+  /**
+   * Callback when data is reloaded.
+   */
+  onReload?: OnLoad<T>;
+}

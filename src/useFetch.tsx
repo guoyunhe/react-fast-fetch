@@ -1,25 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
-import { DataStatus, FetchConfig } from './types';
-
-export interface UseFetchOptions<T> extends Partial<FetchConfig> {
-  /**
-   * Disable data fetching. This is useful when some parameters is required to fetch data.
-   */
-  disabled?: boolean;
-  /**
-   * Auto-reload interval in milliseconds
-   */
-  interval?: number;
-  /**
-   * Callback when the intial load is done.
-   */
-  onLoad?: (url: string, data: T) => void;
-  /**
-   * Callback when data is reloaded.
-   */
-  onReload?: (url: string, data: T) => void;
-}
+import { DataStatus, FetchOptions } from './types';
 
 export interface UseFetchReturn<T> {
   /**
@@ -52,7 +33,10 @@ export interface UseFetchReturn<T> {
   remove: () => Promise<void>;
 }
 
-export function useFetch<T>(url: string, options: UseFetchOptions<T> = {}): UseFetchReturn<T> {
+/**
+ * Hook implementation of fast fetch
+ */
+export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetchReturn<T> {
   const config = useFetchConfig();
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
