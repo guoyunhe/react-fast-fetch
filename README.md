@@ -1,6 +1,6 @@
-# react-fast-fetch
+# React Fast Fetch
 
-Fetch and cache remote data in React apps. Make your app load faster. [try this demo](https://codesandbox.io/s/sleepy-darkness-n6pkzd)
+**React Fast Fetch** is a stale-while-revalidate implementation. It can fetch and cache remote data in React apps. Make your app load faster without writting more code. [Try this demo](https://codesandbox.io/s/sleepy-darkness-n6pkzd?file=/src/App.js)
 
 HTTP client adaptors:
 
