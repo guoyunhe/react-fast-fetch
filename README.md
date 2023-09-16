@@ -1,6 +1,6 @@
 # react-fast-fetch
 
-Fetch and cache remote data in React apps. Make your app load faster.
+Fetch and cache remote data in React apps. Make your app load faster. [try this demo](https://codesandbox.io/s/sleepy-darkness-n6pkzd)
 
 HTTP client adaptors:
 
