@@ -25,8 +25,10 @@ npm i react-fast-fetch
 
 ## Usage
 
+### Setup
+
 ```jsx
-import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
+import { FetchConfigProvider, IndexedDBStore } from 'react-fast-fetch';
 import axios from 'axios';
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
@@ -40,17 +42,62 @@ function App() {
     </FetchConfigProvider>
   );
 }
+```
+
+### Use `useFetch()` hook
+
+If you are writting React function components, `useFetch()` hook is best for you:
+
+```jsx
+import { useFetch } from 'react-fast-fetch';
 
 function Posts() {
-  const { data, loading } = useFetch('/posts?query=hello');
+  const { data, loading, reload, error } = useFetch('/posts?query=hello');
   return (
     <div>
       {loading && <span>Loading...</span>}
+      {error && (
+        <span>
+          Failed to fetch data <button onClick={reload}>Reload</button>
+        </span>
+      )}
       {data?.map((post) => (
         <div key={post.id}>{post.title}</div>
       ))}
     </div>
   );
+}
+```
+
+### Use `<Fetch/>` component
+
+If you are writting React function components, `<Fetch/>` component is made for you:
+
+```jsx
+import { useFetch } from 'react-fast-fetch';
+
+class Posts extends React.Component {
+  state = {
+    posts: null,
+  };
+
+  render() {
+    const { data, loading, reload, error } = this.state.posts || {};
+    return (
+      <div>
+        <Fetch url="/posts?query=hello" onChange={(result) => this.setState({ posts: result })} />
+        {loading && <span>Loading...</span>}
+        {error && (
+          <span>
+            Failed to fetch data <button onClick={reload}>Reload</button>
+          </span>
+        )}
+        {data?.map((post) => (
+          <div key={post.id}>{post.title}</div>
+        ))}
+      </div>
+    );
+  }
 }
 ```
 
@@ -147,4 +194,71 @@ const { data } = useFetch(`/posts?page=${page}`, {
     console.log(url, data);
   },
 });
+```
+
+## Return
+
+### data
+
+Result data returned by fetcher.
+
+```tsx
+const { data } = useFetch('/posts/1');
+```
+
+### loading
+
+If here is NO cached data and fetcher is fetching data from remote, loading is set to true.
+
+```tsx
+const { data, loading } = useFetch('/posts/1');
+return (
+  <div>
+    {loading && <div>Loading...</div>}
+    {data && <div>{data.title}</div>}
+  </div>
+);
+```
+
+### reloading
+
+If here is cached data and fetcher is fetching data from remote, reloading is set to true. In most
+cases, you don't need to notice user that it is reloading if the API is fast enough. If the API is
+indeed very slow, show some messages or progress bars that don't block user interaction.
+
+```tsx
+const { data, loading } = useFetch('/posts/1');
+return (
+  <div>
+    {loading && <div>Loading...</div>}
+    {reloading && <div>Refreshing...</div>}
+    {data && <div>{data.title}</div>}
+  </div>
+);
+```
+
+### reload
+
+A function to manually reload data from remote. Usually used in two cases:
+
+1. Automatic fetch failed. See [error](#error) section bellow.
+2. You modified the resource. For example, you delete a post and then you need to reload the list.
+
+### error
+
+Error throwed by fetcher. Usually mean user need to reload the data.
+
+```tsx
+const { data, loading } = useFetch('/posts/1');
+return (
+  <div>
+    {loading && <div>Loading...</div>}
+    {error && (
+      <span>
+        Failed to fetch data <button onClick={reload}>Reload</button>
+      </span>
+    )}
+    {data && <div>{data.title}</div>}
+  </div>
+);
 ```
