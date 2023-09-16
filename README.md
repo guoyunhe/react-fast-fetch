@@ -20,7 +20,7 @@ Why not localStorage?
 ## Install
 
 ```bash
-npm i react-fast-fetch
+npm i -S react-fast-fetch
 ```
 
 ## Usage
