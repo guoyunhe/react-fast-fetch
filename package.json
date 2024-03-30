@@ -4,13 +4,15 @@
   "description": "Fetch and cache remote data in React apps",
   "keywords": [
     "react",
+    "hooks",
     "fetch",
     "axios",
     "cache",
     "local-storage",
     "session-storage",
     "idb",
-    "indexeddb"
+    "indexeddb",
+    "swr"
   ],
   "homepage": "https://github.com/guoyunhe/react-fast-fetch#readme",
   "bugs": {
@@ -58,22 +60,22 @@
     "idb": "^7.1.1"
   },
   "devDependencies": {
-    "@guoyunhe/react-lib-scripts": "^1.4.0",
-    "@testing-library/dom": "^9.3.1",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@tsconfig/strictest": "^2.0.1",
-    "@tsconfig/vite-react": "^2.0.0",
-    "@types/jest": "^29.5.3",
-    "@types/node": "^20.4.5",
-    "@types/react": "^18.2.17",
-    "@types/react-dom": "^18.2.7",
-    "axios": "^1.4.0",
+    "@guoyunhe/react-lib-scripts": "^1.5.0",
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/react": "^14.2.2",
+    "@testing-library/user-event": "^14.5.2",
+    "@tsconfig/strictest": "^2.0.5",
+    "@tsconfig/vite-react": "^2.0.1",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.73",
+    "@types/react-dom": "^18.2.23",
+    "axios": "^1.6.8",
     "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-doc-ui": "^1.0.1",
     "react-dom": "^18.2.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.4.3"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
