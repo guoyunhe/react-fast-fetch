@@ -2,19 +2,11 @@
   "compilerOptions": {
     "checkJs": false,
     "paths": {
-      "react-fast-fetch": [
-        "./src"
-      ]
+      "react-fast-fetch": ["./src"]
     },
-    "types": [
-      "rive/globals"
-    ],
+    "types": ["rive/globals"],
     "target": "es2015",
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -24,11 +16,5 @@
     "isolatedModules": true,
     "jsx": "react-jsx"
   },
-  "exclude": [
-    ".rive",
-    "build",
-    "coverage",
-    "dist",
-    "node_modules"
-  ]
+  "exclude": [".rive", "build", "coverage", "dist", "node_modules"]
 }
