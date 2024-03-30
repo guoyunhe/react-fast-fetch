@@ -58,21 +58,21 @@
     "idb": "^7.1.1"
   },
   "devDependencies": {
-    "@mdx-js/react": "^3.0.0",
+    "@mdx-js/react": "^3.0.1",
     "@testing-library/dom": "^9.3.4",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.0.0",
+    "@testing-library/react": "^14.2.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/node": "^20.11.30",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
+    "@types/react": "^18.2.73",
+    "@types/react-dom": "^18.2.23",
     "axios": "^1.6.8",
     "gh-pages": "^5.0.0",
     "react": "^18.2.0",
-    "react-doc-ui": "^2.0.0",
+    "react-doc-ui": "^2.2.6",
     "react-dom": "^18.2.0",
-    "rive": "^2.0.0",
-    "typescript": "^5.0.0",
-    "whatwg-fetch": "^3.0.0"
+    "rive": "^2.0.33",
+    "typescript": "^5.4.3",
+    "whatwg-fetch": "^3.6.20"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^17.0.0 || ^16.8.0"
