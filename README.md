@@ -2,26 +2,30 @@
 
 **React Fast Fetch** is a stale-while-revalidate implementation. It can fetch and cache remote data in React apps. Make your app load faster without writting more code. [Try this demo](https://codesandbox.io/s/sleepy-darkness-n6pkzd?file=/src/App.js)
 
-HTTP client adaptors:
-
-- fetch API
-- axios
-
-Browser cache adaptors:
-
-- Memory (a `Map` object, not persist)
-- IndexedDB (persist, almost no limit in size)
-
-Why not localStorage?
-
-- Both of them have 5MB size limit and can be easily filled up. Once the storage is full, any write access will throw errors and may break other functionalities that depend on localStorage.
-- It is hard, if possible, to isolate cache from other important data, like auth tokens. Make cleaning and invalidating caches hard.
-
 ## Install
 
 ```bash
 npm i -S react-fast-fetch
 ```
+
+## Choose a store
+
+react-fast-fetch supports 4 types of storage:
+
+| Store                         | Technology     | Persistence | Limit of size     | I/O Speed    |
+| ----------------------------- | -------------- | ----------- | ----------------- | ------------ |
+| MemoryStore                   | a Map object   | ❌          | your RAM capacity | < 1ms        |
+| StorageStore (localStorage)   | localStorage   | ✅          | 5MB 😢            | < 1ms        |
+| StorageStore (sessionStorage) | sessionStorage | ❌          | 5MB 😢            | < 1ms        |
+| IndexedDBStore                | IndexedDB      | ✅          | your SSD capacity | 10~1000ms 😢 |
+
+- If you want to persist your data and share between tabs:
+  - For large site with many APIs and huge amount of data, use IndexedDBStore
+  - For small site with only a few APIs, use StorageStore (localStorage)
+- If you want to persist data between page refreshing and avoid sharing data between tabs, use StorageStore (sessionStorage)
+- If you don't want to persist your data, use MemoryStore
+
+You can also use multiple different store in the same app, if you know what you really need!
 
 ## Usage
 
