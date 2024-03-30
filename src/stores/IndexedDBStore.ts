@@ -55,7 +55,7 @@ export class IndexedDBStore implements Store {
   }
 
   error(...args: any[]) {
-    console.error(PACKAGE_NAME, 'IndexedDB', ...args);
+    console.error('react-fast-fetch', 'IndexedDBStore', ...args);
   }
 
   async init() {
