@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0 - 2024-03-30
+
+- Added `StorageStore` to support localStorage and sessionStorage
+
 ## 1.4.0 - 2023-09-15
 
 - Added `<Fetch/>` component to use in class components. Note: it is only a thin wrapper around the
