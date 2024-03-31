@@ -27,13 +27,64 @@ react-fast-fetch supports 4 types of storage:
 
 You can also use multiple different store in the same app, if you know what you really need!
 
-## Usage
+### MemoryStore
 
-### Setup
+```js
+import { MemoryStore } from 'react-fast-fetch';
+
+export const store = new MemoryStore({
+  // maximum 2000 url to cache
+  limit: 2000,
+});
+```
+
+### StorageStore
+
+```js
+import { StorageStore } from 'react-fast-fetch';
+
+export const store = new StorageStore({
+  // or sessionStorage as you want
+  storage: localStorage,
+  // maximum 500 url to cache
+  limit: 500,
+});
+```
+
+### IndexedDBStore
+
+```js
+import { IndexedDBStore } from 'react-fast-fetch';
+
+export const store = new IndexedDBStore({
+  // database name
+  dbName: 'my-store',
+  // maximum 5000 url to cache
+  limit: 5000,
+});
+```
+
+## Write a fetcher
+
+### fetch
+
+```js
+const fetcher = (url) => fetch(url).then((res) => res.json());
+```
+
+### axios
+
+```js
+import axios from 'axios';
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+```
+
+## Configure a provider
 
 ```jsx
-import { FetchConfigProvider, IndexedDBStore } from 'react-fast-fetch';
 import axios from 'axios';
+import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -46,14 +97,6 @@ function App() {
     </FetchConfigProvider>
   );
 }
-```
-
-### Use `useFetch()` hook
-
-If you are writting React function components, `useFetch()` hook is best for you:
-
-```jsx
-import { useFetch } from 'react-fast-fetch';
 
 function Posts() {
   const { data, loading, reload, error } = useFetch('/posts?query=hello');
@@ -71,6 +114,8 @@ function Posts() {
     </div>
   );
 }
+
+render(<App />);
 ```
 
 ### Use `<Fetch/>` component
