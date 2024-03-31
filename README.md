@@ -2,13 +2,11 @@
 
 **React Fast Fetch** is a stale-while-revalidate implementation. It can fetch and cache remote data in React apps. Make your app load faster without writting more code. [Try this demo](https://codesandbox.io/s/sleepy-darkness-n6pkzd?file=/src/App.js)
 
-## Install
+## Get started
 
 ```bash
-npm i -S react-fast-fetch
+npm install --save react-fast-fetch
 ```
-
-## Get started
 
 ```jsx
 import axios from 'axios';
@@ -19,15 +17,14 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 const store = new IndexedDBStore({ limit: 10000 });
 
 function App() {
-  return (
-    <FetchConfigProvider fetcher={fetcher} store={store}>
-      <Posts />
-    </FetchConfigProvider>
-  );
-}
+  const { data, loading, reload, error } = useFetch('/posts', {
+    params: {
+      keyword: 'hello',
+      page: 1,
+      pageSize: 10,
+    },
+  });
 
-function Posts() {
-  const { data, loading, reload, error } = useFetch('/posts?query=hello');
   return (
     <div>
       {loading && <span>Loading...</span>}
@@ -43,7 +40,11 @@ function Posts() {
   );
 }
 
-render(<App />);
+render(
+  <FetchConfigProvider fetcher={fetcher} store={store}>
+    <App />
+  </FetchConfigProvider>,
+);
 ```
 
 ## Choose a store
