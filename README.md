@@ -8,6 +8,44 @@
 npm i -S react-fast-fetch
 ```
 
+## Get started
+
+```jsx
+import axios from 'axios';
+import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+
+const store = new IndexedDBStore({ limit: 10000 });
+
+function App() {
+  return (
+    <FetchConfigProvider fetcher={fetcher} store={store}>
+      <Posts />
+    </FetchConfigProvider>
+  );
+}
+
+function Posts() {
+  const { data, loading, reload, error } = useFetch('/posts?query=hello');
+  return (
+    <div>
+      {loading && <span>Loading...</span>}
+      {error && (
+        <span>
+          Failed to fetch data <button onClick={reload}>Reload</button>
+        </span>
+      )}
+      {data?.map((post) => (
+        <div key={post.id}>{post.title}</div>
+      ))}
+    </div>
+  );
+}
+
+render(<App />);
+```
+
 ## Choose a store
 
 react-fast-fetch supports 4 types of storage:
@@ -80,45 +118,9 @@ import axios from 'axios';
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 ```
 
-## Configure a provider
+## useFetch hook
 
-```jsx
-import axios from 'axios';
-import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
-
-const fetcher = (url) => axios.get(url).then((res) => res.data);
-
-const store = new IndexedDBStore({ limit: 10000 });
-
-function App() {
-  return (
-    <FetchConfigProvider fetcher={fetcher} store={store}>
-      <Posts />
-    </FetchConfigProvider>
-  );
-}
-
-function Posts() {
-  const { data, loading, reload, error } = useFetch('/posts?query=hello');
-  return (
-    <div>
-      {loading && <span>Loading...</span>}
-      {error && (
-        <span>
-          Failed to fetch data <button onClick={reload}>Reload</button>
-        </span>
-      )}
-      {data?.map((post) => (
-        <div key={post.id}>{post.title}</div>
-      ))}
-    </div>
-  );
-}
-
-render(<App />);
-```
-
-### Use `<Fetch/>` component
+## Fetch component
 
 If you are writting React function components, `<Fetch/>` component is made for you:
 
@@ -165,40 +167,6 @@ const { data } = useFetch('/url', { fetcher: customFetcher, store: customStore }
 ```
 
 Both ways supports the following configuration:
-
-### fetcher
-
-Fetch remote API data. This prop allows you to use different HTTP client libraries.
-
-Fetch API:
-
-```jsx
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-```
-
-Axios:
-
-```jsx
-import axios from 'axios';
-
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-```
-
-### store
-
-Cache data in various storage. There are two built-in stores:
-
-'''MemoryStore''' saves data in a Map object. The cache is NOT persist, which means you will lose these cache after refreshing or closing the browser tab. Your next visit to the React app will not be speeded up. Modern devices are capable to store several GB of data in memory. However, you can set a limit to reduce memory usage.
-
-```js
-const store = new MemoryStore({ limit: 10000 });
-```
-
-'''IndexedDBStore''' saves data in IndexedDB, and with memory cache for faster access. The cache is persist and your app will speed up on next visit. IndexedDB can store as many data as available space on your disk. However, you should set a reasonable limit to reduce disk space usage. Keep in mind that IndexedDB won't work in private browsing and some webviews that doesn't support IndexedDB.
-
-```js
-const store = new IndexedDBStore({ dbName: 'my_app_fetch_data', limit: 10000 });
-```
 
 ## Options
 
