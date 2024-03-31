@@ -25,6 +25,10 @@ export type OnLoad<T> = (url: string, data: T) => void;
 
 export interface FetchOptions<T> extends Partial<FetchConfig> {
   /**
+   * Search parameters
+   */
+  params?: any;
+  /**
    * Disable data fetching. This is useful when some parameters is required to fetch data.
    */
   disabled?: boolean;

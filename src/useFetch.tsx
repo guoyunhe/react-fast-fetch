@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
 import { DataStatus, FetchOptions } from './types';
+import { useNormalizedUrl } from './useNormalizedUrl';
 
 export interface UseFetchReturn<T> {
   /**
@@ -42,9 +43,11 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   const store = options.store || config.store;
   const { disabled, interval, onLoad, onReload } = options;
 
+  const normalizedUrl = useNormalizedUrl(url, options.params);
+
   // Remember these props and use in async functions
-  const urlRef = useRef(url);
-  urlRef.current = url;
+  const urlRef = useRef(normalizedUrl);
+  urlRef.current = normalizedUrl;
   const loadedUrlRef = useRef<string | null>(null);
   const onLoadRef = useRef(onLoad);
   onLoadRef.current = onLoad;
@@ -59,7 +62,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
 
   // refresh data from remote
   const reload = useCallback(() => {
-    if (url === urlRef.current) {
+    if (normalizedUrl === urlRef.current) {
       if (loadedUrlRef.current === urlRef.current) {
         setReloading(true);
         setLoading(false);
@@ -69,18 +72,18 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
       }
       setError(null);
     }
-    return fetcher(url)
+    return fetcher(normalizedUrl)
       .then((data) => {
-        if (url === urlRef.current) {
+        if (normalizedUrl === urlRef.current) {
           setDataStatus(DataStatus.Valid);
           setData(data);
           onReloadRef.current?.(urlRef.current, data);
-          loadedUrlRef.current = url;
+          loadedUrlRef.current = normalizedUrl;
         }
-        store.set(url, data); // update cache
+        store.set(normalizedUrl, data); // update cache
       })
       .catch((e) => {
-        if (url === urlRef.current) {
+        if (normalizedUrl === urlRef.current) {
           setError(e);
         }
       })
@@ -88,9 +91,9 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
         setReloading(false);
         setLoading(false);
       });
-  }, [fetcher, store, url]);
+  }, [fetcher, store, normalizedUrl]);
 
-  const remove = useCallback(() => store.remove(url), [store, url]);
+  const remove = useCallback(() => store.remove(normalizedUrl), [store, normalizedUrl]);
 
   useEffect(() => {
     if (!disabled) {
@@ -98,21 +101,21 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
       // load remote data
       reload();
       // read cached data
-      store.has(url).then((exist) => {
+      store.has(normalizedUrl).then((exist) => {
         if (exist) {
-          store.get(url).then((data) => {
+          store.get(normalizedUrl).then((data) => {
             // avoid cached data overriding remote data
-            if (loadedUrlRef.current !== url && url === urlRef.current) {
+            if (loadedUrlRef.current !== normalizedUrl && normalizedUrl === urlRef.current) {
               setDataStatus(DataStatus.Stale);
               setData(data);
-              loadedUrlRef.current = url;
+              loadedUrlRef.current = normalizedUrl;
               setLoading(false);
             }
           });
         }
       });
     }
-  }, [url, store, reload, disabled]);
+  }, [normalizedUrl, store, reload, disabled]);
 
   useEffect(() => {
     let timer = 0;

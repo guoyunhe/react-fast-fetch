@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.6.0 - 2024-03-31
+
+- Added `params` options, so you don't have to write search string by hand (you can have many typos!).
+  ```js
+  // before
+  const { data } = useFetch(`/foo/bar?page=${page}&pageSize=${pageSize}`);
+  // now
+  const { data } = useFetch('/foo/bar', { params: { page, pageSize } });
+  ```
+- Normalize url internally to avoid duplicated records in store. For example, `/foo/bar/?b=2&a=1&c=`
+  will be normalized to `/foo/bar?a=1&b=2`. (Search params are sorted and ending slashes are trimed)
+
 ## 1.5.0 - 2024-03-30
 
 - Added `StorageStore` to support localStorage and sessionStorage
