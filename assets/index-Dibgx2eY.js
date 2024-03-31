@@ -284,10 +284,46 @@ read can be very slow in Chrome when CPU load is heavy.`}),`
 `,v.jsx(t.li,{children:"If you don't want to persist your data, use MemoryStore"}),`
 `]}),`
 `,v.jsx(t.p,{children:"You can also use multiple different store in the same app, if you know what you really need!"}),`
-`,v.jsx(t.h2,{children:"Usage"}),`
-`,v.jsx(t.h3,{children:"Setup"}),`
-`,v.jsx(t.pre,{imports:{FetchConfigProvider:ET,IndexedDBStore:zT,axios:Xs},children:v.jsx(t.code,{className:"language-jsx",children:`import { FetchConfigProvider, IndexedDBStore } from 'react-fast-fetch';
-import axios from 'axios';
+`,v.jsx(t.h3,{children:"MemoryStore"}),`
+`,v.jsx(t.pre,{children:v.jsx(t.code,{className:"language-js",children:`import { MemoryStore } from 'react-fast-fetch';
+
+export const store = new MemoryStore({
+  // maximum 2000 url to cache
+  limit: 2000,
+});
+`})}),`
+`,v.jsx(t.h3,{children:"StorageStore"}),`
+`,v.jsx(t.pre,{children:v.jsx(t.code,{className:"language-js",children:`import { StorageStore } from 'react-fast-fetch';
+
+export const store = new StorageStore({
+  // or sessionStorage as you want
+  storage: localStorage,
+  // maximum 500 url to cache
+  limit: 500,
+});
+`})}),`
+`,v.jsx(t.h3,{children:"IndexedDBStore"}),`
+`,v.jsx(t.pre,{children:v.jsx(t.code,{className:"language-js",children:`import { IndexedDBStore } from 'react-fast-fetch';
+
+export const store = new IndexedDBStore({
+  // database name
+  dbName: 'my-store',
+  // maximum 5000 url to cache
+  limit: 5000,
+});
+`})}),`
+`,v.jsx(t.h2,{children:"Write a fetcher"}),`
+`,v.jsx(t.h3,{children:"fetch"}),`
+`,v.jsx(t.pre,{children:v.jsx(t.code,{className:"language-js",children:`const fetcher = (url) => fetch(url).then((res) => res.json());
+`})}),`
+`,v.jsx(t.h3,{children:"axios"}),`
+`,v.jsx(t.pre,{children:v.jsx(t.code,{className:"language-js",children:`import axios from 'axios';
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+`})}),`
+`,v.jsx(t.h2,{children:"Configure a provider"}),`
+`,v.jsx(t.pre,{imports:{FetchConfigProvider:ET,IndexedDBStore:zT,axios:Xs,useFetch:Qs},children:v.jsx(t.code,{className:"language-jsx",children:`import axios from 'axios';
+import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -300,10 +336,6 @@ function App() {
     </FetchConfigProvider>
   );
 }
-`})}),`
-`,v.jsxs(t.h3,{children:["Use ",v.jsx(t.code,{children:"useFetch()"})," hook"]}),`
-`,v.jsxs(t.p,{children:["If you are writting React function components, ",v.jsx(t.code,{children:"useFetch()"})," hook is best for you:"]}),`
-`,v.jsx(t.pre,{imports:{useFetch:Qs},children:v.jsx(t.code,{className:"language-jsx",children:`import { useFetch } from 'react-fast-fetch';
 
 function Posts() {
   const { data, loading, reload, error } = useFetch('/posts?query=hello');
@@ -321,6 +353,8 @@ function Posts() {
     </div>
   );
 }
+
+render(<App />);
 `})}),`
 `,v.jsxs(t.h3,{children:["Use ",v.jsx(t.code,{children:"<Fetch/>"})," component"]}),`
 `,v.jsxs(t.p,{children:["If you are writting React function components, ",v.jsx(t.code,{children:"<Fetch/>"})," component is made for you:"]}),`
