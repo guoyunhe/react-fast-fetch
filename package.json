@@ -55,23 +55,22 @@
     "extends": "stylelint-config-rive"
   },
   "dependencies": {
-    "idb": "^7.1.1"
+    "idb": "^8.0.0"
   },
   "devDependencies": {
     "@mdx-js/react": "^3.0.1",
-    "@testing-library/dom": "^9.3.4",
-    "@testing-library/react": "^14.2.2",
+    "@testing-library/dom": "^10.0.0",
+    "@testing-library/react": "^15.0.2",
     "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^20.11.30",
-    "@types/react": "^18.2.73",
-    "@types/react-dom": "^18.2.23",
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "axios": "^1.6.8",
-    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-doc-ui": "^2.2.6",
     "react-dom": "^18.2.0",
     "rive": "^2.0.33",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.5",
     "whatwg-fetch": "^3.6.20"
   },
   "peerDependencies": {
