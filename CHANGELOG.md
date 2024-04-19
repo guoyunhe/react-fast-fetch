@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0 - 2024-04-19
+
+- Updated to `idb` 8
+
 ## 1.6.0 - 2024-03-31
 
 - Added `params` options, so you don't have to write search string by hand (you can have many typos!).
