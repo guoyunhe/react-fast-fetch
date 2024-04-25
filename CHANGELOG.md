@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.0 - 2024-04-25
+
+- Added `"sideEffects": false` to package.json
+
 ## 1.7.0 - 2024-04-19
 
 - Updated to `idb` 8
