@@ -44,4 +44,8 @@ export interface FetchOptions<T> extends Partial<FetchConfig> {
    * Callback when data is reloaded.
    */
   onReload?: OnLoad<T>;
+  /**
+   * Other dependencies that trigger reloading.
+   */
+  dependencies?: any[];
 }

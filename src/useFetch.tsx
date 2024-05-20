@@ -115,7 +115,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
         }
       });
     }
-  }, [normalizedUrl, store, reload, disabled]);
+  }, [normalizedUrl, store, reload, disabled, ...options.dependencies]);
 
   useEffect(() => {
     let timer = 0;

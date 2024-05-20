@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.0 - 2024-05-20
+
+- Added `dependencies` option to reload data even if URL doesn't change
+
 ## 1.8.0 - 2024-04-25
 
 - Added `"sideEffects": false` to package.json
