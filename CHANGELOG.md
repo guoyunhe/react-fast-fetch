@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.10.0 - 2024-06-26
+
+- Added `initData` option to `IndexedDBStore`
+
 ## 1.9.0 - 2024-05-20
 
 - Added `dependencies` option to reload data even if URL doesn't change
