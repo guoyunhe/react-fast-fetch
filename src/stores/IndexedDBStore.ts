@@ -33,7 +33,7 @@ export interface IndexedDBStoreOptions {
   /**
    * To make web page loading even faster, you can inject API data into HTML and preload into store.
    */
-  initData: Record<string, any>;
+  initData?: Record<string, any>;
 }
 
 export class IndexedDBStore implements Store {
