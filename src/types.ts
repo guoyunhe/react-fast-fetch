@@ -10,6 +10,7 @@ export interface Store {
 export interface FetchConfig {
   fetcher: Fetcher;
   store: Store;
+  initData: Record<string, any>;
 }
 
 export enum DataStatus {

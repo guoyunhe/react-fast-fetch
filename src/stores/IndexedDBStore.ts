@@ -30,6 +30,10 @@ export interface IndexedDBStoreOptions {
    * @default 10000
    */
   limit?: number;
+  /**
+   * To make web page loading even faster, you can inject API data into HTML and preload into store.
+   */
+  initData: Record<string, any>;
 }
 
 export class IndexedDBStore implements Store {
@@ -51,6 +55,12 @@ export class IndexedDBStore implements Store {
       this.limit = options.limit;
     }
     this.map = new Map<string, StoreEntry>();
+    if (options.initData) {
+      const timestamp = Date.now();
+      Object.entries(options.initData).forEach(([url, data]) => {
+        this.map.set(url, { url, data, timestamp });
+      });
+    }
     this.init();
   }
 

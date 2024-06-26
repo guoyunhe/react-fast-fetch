@@ -8,6 +8,7 @@ const defaultStore = new MemoryStore();
 const FetchConfigContext = createContext<FetchConfig>({
   fetcher: defaultFetcher,
   store: defaultStore,
+  initData: {},
 });
 
 export interface FetchConfigProviderProps extends Partial<FetchConfig> {
@@ -17,10 +18,13 @@ export interface FetchConfigProviderProps extends Partial<FetchConfig> {
 export function FetchConfigProvider({
   fetcher = defaultFetcher,
   store = defaultStore,
+  initData = {},
   children,
 }: FetchConfigProviderProps) {
   return (
-    <FetchConfigContext.Provider value={{ fetcher, store }}>{children}</FetchConfigContext.Provider>
+    <FetchConfigContext.Provider value={{ fetcher, store, initData }}>
+      {children}
+    </FetchConfigContext.Provider>
   );
 }
 
