@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11.0 - 2024-08-12
+
+- Purge invalid data when URL has changed
+
 ## 1.10.0 - 2024-06-26
 
 - Added `initData` option to `IndexedDBStore`

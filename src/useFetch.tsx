@@ -95,27 +95,32 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
 
   const remove = useCallback(() => store.remove(normalizedUrl), [store, normalizedUrl]);
 
-  useEffect(() => {
-    if (!disabled) {
-      setDataStatus(DataStatus.Absent);
-      // load remote data
-      reload();
-      // read cached data
-      store.has(normalizedUrl).then((exist) => {
-        if (exist) {
-          store.get(normalizedUrl).then((data) => {
-            // avoid cached data overriding remote data
-            if (loadedUrlRef.current !== normalizedUrl && normalizedUrl === urlRef.current) {
-              setDataStatus(DataStatus.Stale);
-              setData(data);
-              loadedUrlRef.current = normalizedUrl;
-              setLoading(false);
-            }
-          });
-        }
-      });
-    }
-  }, [normalizedUrl, store, reload, disabled, ...(options.dependencies || [])]);
+  useEffect(
+    () => {
+      if (!disabled) {
+        setDataStatus(DataStatus.Absent);
+        setData(undefined);
+        // load remote data
+        reload();
+        // read cached data
+        store.has(normalizedUrl).then((exist) => {
+          if (exist) {
+            store.get(normalizedUrl).then((data) => {
+              // avoid cached data overriding remote data
+              if (loadedUrlRef.current !== normalizedUrl && normalizedUrl === urlRef.current) {
+                setDataStatus(DataStatus.Stale);
+                setData(data);
+                loadedUrlRef.current = normalizedUrl;
+                setLoading(false);
+              }
+            });
+          }
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [normalizedUrl, store, reload, disabled, ...(options.dependencies || [])],
+  );
 
   useEffect(() => {
     let timer = 0;
