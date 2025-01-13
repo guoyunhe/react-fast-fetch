@@ -53,6 +53,7 @@
     "extends": "stylelint-config-rive"
   },
   "dependencies": {
+    "@guoyunhe/use-latest-callback": "^1.0.0",
     "idb": "^8.0.0"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLatestCallback } from '@guoyunhe/use-latest-callback';
+import { useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
 import { DataStatus, FetchOptions } from './types';
 import { useNormalizedUrl } from './useNormalizedUrl';
@@ -61,7 +62,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   const [dataStatus, setDataStatus] = useState(DataStatus.Absent);
 
   // refresh data from remote
-  const reload = useCallback(() => {
+  const reload = useLatestCallback(async () => {
     if (normalizedUrl === urlRef.current) {
       if (loadedUrlRef.current === urlRef.current) {
         setReloading(true);
@@ -72,28 +73,26 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
       }
       setError(null);
     }
-    return fetcher(normalizedUrl)
-      .then((data) => {
-        if (normalizedUrl === urlRef.current) {
-          setDataStatus(DataStatus.Valid);
-          setData(data);
-          onReloadRef.current?.(urlRef.current, data);
-          loadedUrlRef.current = normalizedUrl;
-        }
-        store.set(normalizedUrl, data); // update cache
-      })
-      .catch((e) => {
-        if (normalizedUrl === urlRef.current) {
-          setError(e);
-        }
-      })
-      .finally(() => {
-        setReloading(false);
-        setLoading(false);
-      });
-  }, [fetcher, store, normalizedUrl]);
 
-  const remove = useCallback(() => store.remove(normalizedUrl), [store, normalizedUrl]);
+    try {
+      const data = await fetcher(normalizedUrl);
+      if (normalizedUrl === urlRef.current) {
+        setDataStatus(DataStatus.Valid);
+        setData(data);
+        onReloadRef.current?.(urlRef.current, data);
+        loadedUrlRef.current = normalizedUrl;
+      }
+      store.set(normalizedUrl, data); // update cache
+    } catch (e) {
+      if (normalizedUrl === urlRef.current) {
+        setError(e);
+      }
+    }
+    setReloading(false);
+    setLoading(false);
+  });
+
+  const remove = useLatestCallback(() => store.remove(normalizedUrl));
 
   useEffect(
     () => {
@@ -119,7 +118,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [normalizedUrl, store, reload, disabled, ...(options.dependencies || [])],
+    [normalizedUrl, store, fetcher, reload, disabled, ...(options.dependencies || [])],
   );
 
   useEffect(() => {
