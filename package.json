@@ -29,8 +29,8 @@
     "email": "i@guoyunhe.me"
   },
   "sideEffects": false,
-  "main": "dist/cjs/index.js",
-  "module": "dist/index.js",
+  "type": "module",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -49,9 +49,6 @@
     "test:watch": "rive test --watch"
   },
   "prettier": "prettier-config-rive",
-  "eslintConfig": {
-    "extends": "eslint-config-rive/react"
-  },
   "stylelint": {
     "extends": "stylelint-config-rive"
   },
@@ -59,23 +56,22 @@
     "idb": "^8.0.0"
   },
   "devDependencies": {
-    "@mdx-js/react": "^3.0.1",
-    "@testing-library/dom": "^10.1.0",
-    "@testing-library/react": "^15.0.7",
+    "@mdx-js/react": "^3.1.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^20.12.12",
-    "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
+    "@types/node": "^20.17.12",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
     "axios": "^1.7.0",
     "react": "^18.3.1",
-    "react-doc-ui": "^2.2.6",
+    "react-doc-ui": "^2.3.0",
     "react-dom": "^18.3.1",
-    "rive": "^2.0.33",
-    "typescript": "^5.4.5",
-    "whatwg-fetch": "^3.6.20"
+    "rive": "^3.0.1",
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^17.0.0 || ^16.8.0"
+    "react": ">=16.8.0"
   },
   "rive": {
     "template": "react",
