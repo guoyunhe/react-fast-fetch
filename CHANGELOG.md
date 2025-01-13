@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.12.0 - 2025-01-13
+
+- Reference to `reload` and `remove` will not change anymore
+
 ## 1.11.0 - 2024-08-12
 
 - Purge invalid data when URL has changed
