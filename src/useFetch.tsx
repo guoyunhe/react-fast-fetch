@@ -1,4 +1,5 @@
 import { useLatestCallback } from '@guoyunhe/use-latest-callback';
+import { useLatestRef } from '@guoyunhe/use-latest-ref';
 import { useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
 import { DataStatus, FetchOptions } from './types';
@@ -47,13 +48,10 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   const normalizedUrl = useNormalizedUrl(url, options.params);
 
   // Remember these props and use in async functions
-  const urlRef = useRef(normalizedUrl);
-  urlRef.current = normalizedUrl;
+  const urlRef = useLatestRef(normalizedUrl);
   const loadedUrlRef = useRef<string | null>(null);
-  const onLoadRef = useRef(onLoad);
-  onLoadRef.current = onLoad;
-  const onReloadRef = useRef(onReload);
-  onReloadRef.current = onReload;
+  const onLoadRef = useLatestRef(onLoad);
+  const onReloadRef = useLatestRef(onReload);
 
   const [data, setData] = useState<T>();
   const [error, setError] = useState<any>();
