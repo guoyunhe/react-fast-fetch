@@ -73,14 +73,18 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
     }
 
     try {
-      const data = await fetcher(normalizedUrl);
+      const newData = await fetcher(normalizedUrl);
       if (normalizedUrl === urlRef.current) {
         setDataStatus(DataStatus.Valid);
-        setData(data);
-        onReloadRef.current?.(urlRef.current, data);
+        setData(newData);
+        if (loadedUrlRef.current === urlRef.current) {
+          onReloadRef.current?.(urlRef.current, newData);
+        } else {
+          onLoadRef.current?.(urlRef.current, newData);
+        }
         loadedUrlRef.current = normalizedUrl;
       }
-      store.set(normalizedUrl, data); // update cache
+      store.set(normalizedUrl, newData); // update cache
     } catch (e) {
       if (normalizedUrl === urlRef.current) {
         setError(e);
@@ -104,11 +108,11 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
         // read cached data
         store.has(normalizedUrl).then((exist) => {
           if (exist) {
-            store.get(normalizedUrl).then((data) => {
+            store.get(normalizedUrl).then((newData) => {
               // avoid cached data overriding remote data
               if (loadedUrlRef.current !== normalizedUrl && normalizedUrl === urlRef.current) {
                 setDataStatus(DataStatus.Stale);
-                setData(data);
+                setData(newData);
                 loadedUrlRef.current = normalizedUrl;
                 setLoading(false);
               }
