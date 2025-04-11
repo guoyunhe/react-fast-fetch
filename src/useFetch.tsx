@@ -42,7 +42,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   const config = useFetchConfig();
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
-  const { disabled, interval, onLoad, onReload } = options;
+  const { disabled, purge, interval, onLoad, onReload } = options;
 
   const normalizedUrl = useNormalizedUrl(url, options.params);
 
@@ -97,8 +97,10 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   useEffect(
     () => {
       if (!disabled) {
-        setDataStatus(DataStatus.Absent);
-        setData(undefined);
+        if (purge) {
+          setDataStatus(DataStatus.Absent);
+          setData(undefined);
+        }
         // load remote data
         reload();
         // read cached data
@@ -118,7 +120,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [normalizedUrl, store, fetcher, reload, disabled, ...(options.dependencies || [])],
+    [normalizedUrl, store, fetcher, reload, disabled, purge, ...(options.dependencies || [])],
   );
 
   useEffect(() => {

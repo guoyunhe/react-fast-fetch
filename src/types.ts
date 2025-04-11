@@ -34,6 +34,10 @@ export interface FetchOptions<T> extends Partial<FetchConfig> {
    */
   disabled?: boolean;
   /**
+   * Purge data immediately on url or params changes
+   */
+  purge?: boolean;
+  /**
    * Auto-reload interval in milliseconds
    */
   interval?: number;
