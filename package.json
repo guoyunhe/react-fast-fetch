@@ -41,36 +41,55 @@
   "scripts": {
     "build": "rive build",
     "build:watch": "rive build --watch",
-    "lint": "rive lint",
-    "lint:fix": "rive lint --fix",
+    "ci:eslint": "eslint -f json src -o ./.ci/eslint.json",
+    "lint": "eslint .",
+    "lint:fix": "prettier --write . && eslint --fix .",
+    "prepare": "husky",
     "start": "rive start",
     "test": "rive test",
     "test:ui": "rive test --ui",
     "test:watch": "rive test --watch"
   },
-  "prettier": "prettier-config-rive",
-  "stylelint": {
-    "extends": "stylelint-config-rive"
+  "commitlint": {
+    "extends": [
+      "ali"
+    ]
   },
+  "lint-staged": {
+    "*.{cjs,cts,js,jsx,mjs,mts,ts,tsx,vue}": "eslint --fix",
+    "*.{cjs,css,cts,html,js,json,jsx,less,md,mjs,mts,scss,ts,tsx,vue,yaml,yml}": "prettier --write"
+  },
+  "prettier": "prettier-config-ali",
+  "stylelint": {},
   "dependencies": {
     "@guoyunhe/use-latest-callback": "^1.0.0",
     "@guoyunhe/use-latest-ref": "^1.0.0",
-    "idb": "^8.0.0"
+    "idb": "^8.0.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
     "@mdx-js/react": "^3.1.0",
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.1.0",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^20.17.12",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
-    "axios": "^1.7.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^20.17.30",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "axios": "^1.8.4",
+    "commitlint-config-ali": "^1.1.0",
+    "eslint": "^9.24.0",
+    "eslint-config-ali": "^16.1.1",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.5.3",
+    "prettier-config-ali": "^1.3.2",
     "react": "^18.3.1",
     "react-doc-ui": "^2.3.0",
     "react-dom": "^18.3.1",
     "rive": "^3.0.1",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
