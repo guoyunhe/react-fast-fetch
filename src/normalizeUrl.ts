@@ -42,5 +42,5 @@ export function normalizeUrl(url: string, params?: any): string {
     return trimedPath;
   }
 
-  return trimedPath + '?' + sortedSearch;
+  return `${trimedPath}?${sortedSearch}`;
 }

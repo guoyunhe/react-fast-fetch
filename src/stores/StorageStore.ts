@@ -58,7 +58,7 @@ export class StorageStore implements Store, StorageStoreOptions {
             const parsedValue = JSON.parse(value);
             const url = key.substring(this.prefix.length);
             this.cache.set(url, parsedValue);
-          } catch (e) {
+          } catch {
             this.storage.removeItem(key);
           }
         }
@@ -82,7 +82,7 @@ export class StorageStore implements Store, StorageStoreOptions {
     const storageValue = JSON.stringify(record);
     try {
       this.storage.setItem(storageKey, storageValue);
-    } catch (e) {
+    } catch {
       // If storage is full, clean up and try again
       this.clean();
       this.storage.setItem(storageKey, storageValue);
