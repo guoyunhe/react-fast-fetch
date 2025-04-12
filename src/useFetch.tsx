@@ -43,7 +43,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   const config = useFetchConfig();
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
-  const { disabled, purge, interval, onLoad, onReload } = options;
+  const { disabled, preserve, interval, onLoad, onReload } = options;
 
   const normalizedUrl = useNormalizedUrl(url, options.params);
 
@@ -99,7 +99,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   useEffect(
     () => {
       if (!disabled) {
-        if (purge) {
+        if (!preserve) {
           setDataStatus(DataStatus.Absent);
           setData(undefined);
         }
@@ -122,7 +122,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [normalizedUrl, store, fetcher, reload, disabled, purge, ...(options.dependencies || [])],
+    [normalizedUrl, store, fetcher, reload, disabled, preserve, ...(options.dependencies || [])],
   );
 
   useEffect(() => {

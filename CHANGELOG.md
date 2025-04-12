@@ -2,7 +2,7 @@
 
 ## 1.13.0 - 2025-04-11
 
-- Preserve data on URL change unless purge is true
+- Added `preserve` option to `useFetch()` hook.
 
 ## 1.12.0 - 2025-01-13
 

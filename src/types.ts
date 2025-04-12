@@ -34,9 +34,10 @@ export interface FetchOptions<T> extends Partial<FetchConfig> {
    */
   disabled?: boolean;
   /**
-   * Purge data immediately on url or params changes
+   * When url or params changes, preserve old data before new data loaded. Enable when you want
+   * smooth transition. However, old data may cause displaying wrong information. Use it carefully.
    */
-  purge?: boolean;
+  preserve?: boolean;
   /**
    * Auto-reload interval in milliseconds
    */

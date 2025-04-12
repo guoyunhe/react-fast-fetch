@@ -180,6 +180,16 @@ const [page, setPage] = useState(1);
 const { data } = useFetch(`/posts?page=${page}`, { disabled: page < 1 });
 ```
 
+### preserve
+
+When url or params changes, preserve old data before new data loaded. Enable when you want smooth
+transition. However, old data may cause displaying wrong information. Use it carefully.
+
+Typical usage example may want to enable this option:
+
+- Fetch list of data and change page number.
+- Update dropdown menu while changing search keyword.
+
 ### interval
 
 Auto-reload data in N milliseconds. Use it to keep data up-to-date.
