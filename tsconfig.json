@@ -4,8 +4,8 @@
     "paths": {
       "react-fast-fetch": ["./src"]
     },
-    "types": ["rive/globals", "node"],
-    "target": "es2017",
+    "types": ["rive/globals", "node", "vitest/globals"],
+    "target": "es2020",
     "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
     "skipLibCheck": true,
