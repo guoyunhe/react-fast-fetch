@@ -33,14 +33,14 @@ export interface StorageStoreOptions {
 }
 
 export class StorageStore implements Store, StorageStoreOptions {
+  storage = window.localStorage;
+  prefix = 'react-fast-fetch';
+  limit = 1000;
+
   /**
    * Memory cache for faster access, the limit is the same as storage
    */
   private cache: Map<string, StorageStoreRecord>;
-
-  storage = window.localStorage;
-  prefix = 'react-fast-fetch';
-  limit = 1000;
 
   constructor(options?: StorageStoreOptions) {
     if (options) {
