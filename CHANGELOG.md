@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.0 - 2025-06-01
+
+- Changed to reset data when disabled is true and preserve is false
+
 ## 1.13.0 - 2025-04-11
 
 - Added `preserve` option to `useFetch()` hook.

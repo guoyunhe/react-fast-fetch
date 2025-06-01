@@ -98,11 +98,12 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
 
   useEffect(
     () => {
+      if (!preserve) {
+        setDataStatus(DataStatus.Absent);
+        setData(undefined);
+      }
+
       if (!disabled) {
-        if (!preserve) {
-          setDataStatus(DataStatus.Absent);
-          setData(undefined);
-        }
         // load remote data
         reload();
         // read cached data
