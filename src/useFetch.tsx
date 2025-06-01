@@ -2,8 +2,8 @@ import { useLatestCallback } from '@guoyunhe/use-latest-callback';
 import { useLatestRef } from '@guoyunhe/use-latest-ref';
 import { useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
+import { normalizeUrl } from './normalizeUrl';
 import { DataStatus, FetchOptions } from './types';
-import { useNormalizedUrl } from './useNormalizedUrl';
 
 export interface UseFetchReturn<T> {
   /**
@@ -45,7 +45,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   const store = options.store || config.store;
   const { disabled, preserve, interval, onLoad, onReload } = options;
 
-  const normalizedUrl = useNormalizedUrl(url, options.params);
+  const normalizedUrl = normalizeUrl(url, options.params);
 
   // Remember these props and use in async functions
   const urlRef = useLatestRef(normalizedUrl);
