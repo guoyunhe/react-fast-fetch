@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.15.0 - 2025-07-12
+
+- feat: changed license to `MPL-2.0`
+
 ## 1.14.0 - 2025-06-01
 
 - Changed to reset data when disabled is true and preserve is false
