@@ -1,6 +1,14 @@
-# React Fast Fetch
+# react-fast-fetch
 
-**React Fast Fetch** is a stale-while-revalidate implementation. It can fetch and cache remote data in React apps. Make your app load faster without writting more code. [Try this demo](https://codesandbox.io/s/sleepy-darkness-n6pkzd?file=/src/App.js)
+![Version](https://img.shields.io/npm/v/react-fast-fetch)
+![License](https://img.shields.io/npm/l/react-fast-fetch)
+![Downloads](https://img.shields.io/npm/dw/react-fast-fetch)
+![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-fast-fetch)
+
+Fetch and cache remote data in React apps. Make your app load faster.
+
+react-fast-fetch is a stale-while-revalidate implementation similiar to [swr](https://swr.vercel.app/),
+with optimized support for [IndexedDB](https://developer.mozilla.org/docs/Web/API/IndexedDB_API).
 
 ## Get started
 
