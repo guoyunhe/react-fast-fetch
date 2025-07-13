@@ -1,10 +1,6 @@
-export type Fetcher = (url: string) => Promise<any>;
+import { Store } from './Store';
 
-export interface Store {
-  get: (url: string) => Promise<any>;
-  set: (url: string, data: any) => Promise<void>;
-  remove: (url: string) => Promise<void>;
-}
+export type Fetcher = (url: string) => Promise<any>;
 
 export interface FetchConfig {
   fetcher: Fetcher;

@@ -1,5 +1,5 @@
 import { DBSchema, IDBPDatabase, openDB } from 'idb';
-import { Store } from '../types';
+import { Store } from './Store';
 
 interface StoreEntry {
   url: string;

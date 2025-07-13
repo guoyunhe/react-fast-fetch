@@ -1,4 +1,4 @@
-import { Store } from '../types';
+import { Store } from './Store';
 
 export interface CacheStoreOptions {
   /**

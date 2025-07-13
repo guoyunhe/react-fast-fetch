@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext } from 'react';
-import { MemoryStore } from './stores/MemoryStore';
+import { MemoryStore } from './MemoryStore';
 import { FetchConfig } from './types';
 
 const defaultFetcher = (url: string) => fetch(url).then((res) => res.json());
