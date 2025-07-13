@@ -3,11 +3,47 @@
 exports[`members > should match snapshot 1`] = `
 {
   "CacheStore": [Function],
-  "FetchConfigProvider": [Function],
+  "FetchContext": {
+    "$$typeof": Symbol(react.context),
+    "Consumer": {
+      "$$typeof": Symbol(react.context),
+      "_context": [Circular],
+    },
+    "Provider": {
+      "$$typeof": Symbol(react.provider),
+      "_context": [Circular],
+    },
+    "_currentRenderer": null,
+    "_currentRenderer2": null,
+    "_currentValue": {
+      "fetcher": [Function],
+      "initData": {},
+      "store": MemoryStore {
+        "limit": 1000,
+        "map": Map {},
+      },
+    },
+    "_currentValue2": {
+      "fetcher": [Function],
+      "initData": {},
+      "store": MemoryStore {
+        "limit": 1000,
+        "map": Map {},
+      },
+    },
+    "_defaultValue": null,
+    "_globalName": null,
+    "_threadCount": 0,
+  },
+  "FetchProvider": [Function],
   "IndexedDBStore": [Function],
   "MemoryStore": [Function],
   "StorageStore": [Function],
+  "defaultFetcher": [Function],
+  "defaultStore": MemoryStore {
+    "limit": 1000,
+    "map": Map {},
+  },
   "useFetch": [Function],
-  "useFetchConfig": [Function],
 }
 `;

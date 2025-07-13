@@ -4,6 +4,7 @@
 
 - feat!(DataStatus): removed `DataStatus` enum
 - feat!(Fetch): removed `Fetch` component
+- feat!(FetchProvider): renamed `FetchConfigProvider` component to `FetchProvider`
 - feat!(Store): removed `has` function for better performance
 - feat!(useFetch): removed `reloading` return, you should use `loading` return instead
 - feat!(useFetch): removed `dataStatus` return, you should use `loading` return instead

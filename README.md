@@ -131,9 +131,9 @@ Here are two ways to configure react-fast-fetch.
 
 ```jsx
 // Use global config, recommended
-<FetchConfigProvider fetcher={fetcher} store={store}>
+<FetchProvider fetcher={fetcher} store={store}>
   ...
-</FetchConfigProvider>;
+</FetchProvider>;
 
 // Use local config, for flexibility
 const { data } = useFetch('/url', { fetcher: customFetcher, store: customStore });

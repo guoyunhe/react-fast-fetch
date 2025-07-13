@@ -1,8 +1,8 @@
 import { useLatestCallback } from '@guoyunhe/use-latest-callback';
 import { useLatestRef } from '@guoyunhe/use-latest-ref';
-import { useEffect, useRef, useState } from 'react';
-import { useFetchConfig } from './FetchConfigContext';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { normalizeUrl } from './normalizeUrl';
+import { FetchContext } from './private/FetchContext';
 import { FetchOptions } from './types';
 
 export interface UseFetchReturn<T> {
@@ -32,7 +32,7 @@ export interface UseFetchReturn<T> {
  * Hook implementation of fast fetch
  */
 export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetchReturn<T> {
-  const config = useFetchConfig();
+  const config = useContext(FetchContext);
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
   const { disabled, preserve, interval, onLoad } = options;
