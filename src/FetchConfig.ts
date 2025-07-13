@@ -1,8 +1,7 @@
 import { Store } from './Store';
-import { Fetcher } from './types';
 
 export interface FetchConfig {
-  fetcher: Fetcher;
+  fetcher: (url: string) => Promise<any>;
   store: Store;
   initData: Record<string, any>;
 }

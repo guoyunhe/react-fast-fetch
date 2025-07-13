@@ -1,9 +1,5 @@
 import { FetchConfig } from './FetchConfig';
 
-export type Fetcher = (url: string) => Promise<any>;
-
-export type OnLoad<T> = (url: string, data: T) => void;
-
 export interface FetchOptions<T> extends Partial<FetchConfig> {
   /**
    * Search parameters
@@ -25,11 +21,7 @@ export interface FetchOptions<T> extends Partial<FetchConfig> {
   /**
    * Callback when the intial load is done.
    */
-  onLoad?: OnLoad<T>;
-  /**
-   * Callback when data is reloaded.
-   */
-  onReload?: OnLoad<T>;
+  onLoad?: (url: string, data: T) => void;
   /**
    * Other dependencies that trigger reloading.
    */
