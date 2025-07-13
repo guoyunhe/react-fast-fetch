@@ -1,9 +1,9 @@
 import { useLatestCallback } from '@guoyunhe/use-latest-callback';
 import { useLatestRef } from '@guoyunhe/use-latest-ref';
 import { useContext, useEffect, useRef, useState } from 'react';
+import { FetchOptions } from './FetchOptions';
 import { FetchContext } from './private/FetchContext';
 import { normalizeUrl } from './private/normalizeUrl';
-import { FetchOptions } from './types';
 
 export interface UseFetchReturn<T> {
   /**
