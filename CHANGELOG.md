@@ -3,7 +3,9 @@
 ## 2.0.0 - 2025-07-12
 
 - feat!(Store): removed `has` function for better performance
+- feat!(useFetch): removed `reloading` return, you should use `loading` return instead
 - feat(CacheStore): new store implemented with [Cache API](https://developer.mozilla.org/docs/Web/API/Cache)
+- feat(useFetch): added `quiet` flag to `reload` return to refresh data without change loading state
 
 ## 1.15.0 - 2025-07-12
 
