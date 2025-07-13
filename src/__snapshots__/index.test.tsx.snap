@@ -2,6 +2,7 @@
 
 exports[`members > should match snapshot 1`] = `
 {
+  "CacheStore": [Function],
   "DataStatus": {
     "0": "Absent",
     "1": "Stale",
