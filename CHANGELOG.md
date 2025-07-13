@@ -3,6 +3,7 @@
 ## 2.0.0 - 2025-07-12
 
 - feat!(Store): removed `has` function for better performance
+- feat(CacheStore): new store implemented with [Cache API](https://developer.mozilla.org/docs/Web/API/Cache)
 
 ## 1.15.0 - 2025-07-12
 
