@@ -51,7 +51,7 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
 
   const [data, setData] = useState<T>();
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [dataStatus, setDataStatus] = useState(DataStatus.Absent);
 
   // refresh data from remote
