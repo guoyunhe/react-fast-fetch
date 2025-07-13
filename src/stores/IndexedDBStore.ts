@@ -88,25 +88,6 @@ export class IndexedDBStore implements Store {
     }
   }
 
-  async has(url: string) {
-    if (this.map.has(url)) {
-      return true;
-    }
-    try {
-      await this.init();
-      const value = await this.db?.get('store', url);
-      if (value) {
-        this.map.set(url, value); // cache in memory
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      this.error('Failed to read IndexedDB', e);
-      return false;
-    }
-  }
-
   async get(url: string) {
     const memoryValue = this.map.get(url);
     if (memoryValue) {

@@ -66,10 +66,6 @@ export class StorageStore implements Store, StorageStoreOptions {
     }
   }
 
-  async has(url: string) {
-    return this.cache.has(url);
-  }
-
   async get(url: string) {
     return this.cache.get(url)?.data;
   }

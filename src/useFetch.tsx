@@ -107,17 +107,13 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
         // load remote data
         reload();
         // read cached data
-        store.has(normalizedUrl).then((exist) => {
-          if (exist) {
-            store.get(normalizedUrl).then((newData) => {
-              // avoid cached data overriding remote data
-              if (loadedUrlRef.current !== normalizedUrl && normalizedUrl === urlRef.current) {
-                setDataStatus(DataStatus.Stale);
-                setData(newData);
-                loadedUrlRef.current = normalizedUrl;
-                setLoading(false);
-              }
-            });
+        store.get(normalizedUrl).then((newData) => {
+          // avoid cached data overriding remote data
+          if (loadedUrlRef.current !== normalizedUrl && normalizedUrl === urlRef.current) {
+            setDataStatus(DataStatus.Stale);
+            setData(newData);
+            loadedUrlRef.current = normalizedUrl;
+            setLoading(false);
           }
         });
       }

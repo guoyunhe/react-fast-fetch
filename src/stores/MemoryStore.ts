@@ -27,10 +27,6 @@ export class MemoryStore implements Store {
     this.map = new Map<string, StoreEntry>();
   }
 
-  async has(url: string) {
-    return this.map.has(url);
-  }
-
   async get(url: string) {
     return this.map.get(url)?.data;
   }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0 - 2025-07-12
+
+- feat!(Store): removed `has` function for better performance
+
 ## 1.15.0 - 2025-07-12
 
 - feat: changed license to `MPL-2.0`
