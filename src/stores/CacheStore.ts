@@ -5,7 +5,7 @@ export interface CacheStoreOptions {
    * Cache name
    * @default 'react-fast-fetch'
    */
-  name?: string;
+  cacheName?: string;
 }
 
 /**
@@ -19,7 +19,7 @@ export class CacheStore implements Store {
     if (options) {
       Object.assign(this.options, options);
     }
-    this.cache = caches.open(this.options.name || 'react-fast-fetch');
+    this.cache = caches.open(this.options.cacheName || 'react-fast-fetch');
   }
 
   get = (url: string): Promise<any> => {

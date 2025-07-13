@@ -10,61 +10,57 @@ Fetch and cache remote data in React apps. Make your app load faster.
 react-fast-fetch is a stale-while-revalidate implementation similiar to [swr](https://swr.vercel.app/),
 with optimized support for [IndexedDB](https://developer.mozilla.org/docs/Web/API/IndexedDB_API).
 
-## Get started
+## Install
 
 ```bash
 npm install --save react-fast-fetch
 ```
 
+## Example
+
+### Basic
+
+Use default fetch and MemoryStore.
+
 ```jsx
-import axios from 'axios';
-import { FetchConfigProvider, IndexedDBStore, useFetch } from 'react-fast-fetch';
-
-const fetcher = (url) => axios.get(url).then((res) => res.data);
-
-const store = new IndexedDBStore({ limit: 10000 });
+import { useFetch } from 'react-fast-fetch';
 
 function App() {
-  const { data, loading, reload, error } = useFetch('/posts', {
-    params: {
-      keyword: 'hello',
-      page: 1,
-      pageSize: 10,
-    },
-  });
+  const { data, loading, reload, error } = useFetch('https://unpkg.com/react/package.json');
 
   return (
     <div>
-      {loading && <span>Loading...</span>}
-      {error && (
-        <span>
-          Failed to fetch data <button onClick={reload}>Reload</button>
-        </span>
+      {loading ? (
+        <span>Loading...</span>
+      ) : (
+        <>
+          {error ? (
+            <span>Failed to fetch data</span>
+          ) : (
+            <span> Latest version of React is {data?.version}</span>
+          )}
+          &nbsp;
+          <button onClick={reload}>Reload</button>
+        </>
       )}
-      {data?.map((post) => (
-        <div key={post.id}>{post.title}</div>
-      ))}
     </div>
   );
 }
 
-render(
-  <FetchConfigProvider fetcher={fetcher} store={store}>
-    <App />
-  </FetchConfigProvider>,
-);
+render(<App />);
 ```
 
 ## Choose a store
 
-react-fast-fetch supports 4 types of storage:
+react-fast-fetch supports 5 types of storage:
 
-| Store                         | Technology     | Persistence | Limit of size     | I/O Speed    |
-| ----------------------------- | -------------- | ----------- | ----------------- | ------------ |
-| MemoryStore                   | a Map object   | ❌          | your RAM capacity | < 1ms        |
-| StorageStore (localStorage)   | localStorage   | ✅          | 5MB 😢            | < 1ms        |
-| StorageStore (sessionStorage) | sessionStorage | ❌          | 5MB 😢            | < 1ms        |
-| IndexedDBStore                | IndexedDB      | ✅          | your SSD capacity | 10~1000ms 😢 |
+| Store                         | Persistence | Limit of size | I/O Speed    |
+| ----------------------------- | ----------- | ------------- | ------------ |
+| MemoryStore                   | ❌          | ~1GB          | < 1ms        |
+| StorageStore (localStorage)   | ✅          | 5MiB 😢       | < 1ms        |
+| StorageStore (sessionStorage) | ❌          | 5MiB 😢       | < 1ms        |
+| IndexedDBStore                | ✅          | >10GB         | 10~1000ms 😢 |
+| CacheStore                    | ✅          | >10GB         | 10~1000ms 😢 |
 
 - If you want to persist your data and share between tabs:
   - For large site with many APIs and huge amount of data, use IndexedDBStore
