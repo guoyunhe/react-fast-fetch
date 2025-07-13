@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
+import { FetchConfig } from './FetchConfig';
 import { defaultFetcher, defaultStore, FetchContext } from './private/FetchContext';
-import { FetchConfig } from './types';
 
 export interface FetchProviderProps extends Partial<FetchConfig> {
   children?: ReactNode;

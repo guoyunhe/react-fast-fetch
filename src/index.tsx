@@ -1,4 +1,5 @@
 export * from './CacheStore';
+export * from './FetchConfig';
 export * from './FetchProvider';
 export * from './IndexedDBStore';
 export * from './MemoryStore';

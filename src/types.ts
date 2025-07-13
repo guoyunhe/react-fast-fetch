@@ -1,12 +1,6 @@
-import { Store } from './Store';
+import { FetchConfig } from './FetchConfig';
 
 export type Fetcher = (url: string) => Promise<any>;
-
-export interface FetchConfig {
-  fetcher: Fetcher;
-  store: Store;
-  initData: Record<string, any>;
-}
 
 export type OnLoad<T> = (url: string, data: T) => void;
 
