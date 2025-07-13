@@ -1,4 +1,3 @@
-export * from './Fetch';
 export * from './FetchConfigContext';
 export * from './stores/CacheStore';
 export * from './stores/IndexedDBStore';

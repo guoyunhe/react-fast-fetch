@@ -125,38 +125,6 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 ## useFetch hook
 
-## Fetch component
-
-If you are writting React function components, `<Fetch/>` component is made for you:
-
-```jsx
-import { useFetch } from 'react-fast-fetch';
-
-class Posts extends React.Component {
-  state = {
-    posts: null,
-  };
-
-  render() {
-    const { data, loading, reload, error } = this.state.posts || {};
-    return (
-      <div>
-        <Fetch url="/posts?query=hello" onChange={(result) => this.setState({ posts: result })} />
-        {loading && <span>Loading...</span>}
-        {error && (
-          <span>
-            Failed to fetch data <button onClick={reload}>Reload</button>
-          </span>
-        )}
-        {data?.map((post) => (
-          <div key={post.id}>{post.title}</div>
-        ))}
-      </div>
-    );
-  }
-}
-```
-
 ## Config
 
 Here are two ways to configure react-fast-fetch.
