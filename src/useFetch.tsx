@@ -11,7 +11,7 @@ export interface UseFetchReturn<T> {
    */
   data: T | undefined;
   /**
-   * Error while fetching data
+   * Error thrown when fetching failed
    */
   error: any;
   /**
@@ -39,15 +39,15 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   const config = useFetchConfig();
   const fetcher = options.fetcher || config.fetcher;
   const store = options.store || config.store;
-  const { disabled, preserve, interval, onLoad, onReload } = options;
+  const { disabled, preserve, interval, onLoad } = options;
 
   const normalizedUrl = normalizeUrl(url, options.params);
 
   // Remember these props and use in async functions
   const urlRef = useLatestRef(normalizedUrl);
+  // Loaded (not cached) url
   const loadedUrlRef = useRef<string | null>(null);
   const onLoadRef = useLatestRef(onLoad);
-  const onReloadRef = useLatestRef(onReload);
 
   const [data, setData] = useState<T>();
   const [error, setError] = useState<any>();
@@ -56,34 +56,27 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
 
   // refresh data from remote
   const reload = useLatestCallback(async () => {
-    if (normalizedUrl === urlRef.current) {
-      if (loadedUrlRef.current === urlRef.current) {
-        setLoading(false);
-      } else {
-        setLoading(true);
-      }
-      setError(null);
-    }
+    setLoading(true);
+    setError(null);
 
     try {
       const newData = await fetcher(normalizedUrl);
+      // abort out-dated promise
       if (normalizedUrl === urlRef.current) {
         setDataStatus(DataStatus.Valid);
         setData(newData);
-        if (loadedUrlRef.current === urlRef.current) {
-          onReloadRef.current?.(urlRef.current, newData);
-        } else {
-          onLoadRef.current?.(urlRef.current, newData);
-        }
+        setLoading(false);
+        onLoadRef.current?.(urlRef.current, newData);
         loadedUrlRef.current = normalizedUrl;
+        store.set(normalizedUrl, newData); // update cache
       }
-      store.set(normalizedUrl, newData); // update cache
     } catch (e) {
+      // abort out-dated promise
       if (normalizedUrl === urlRef.current) {
         setError(e);
+        setLoading(false);
       }
     }
-    setLoading(false);
   });
 
   const remove = useLatestCallback(() => store.remove(normalizedUrl));
@@ -100,11 +93,14 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
         reload();
         // read cached data
         store.get(normalizedUrl).then((newData) => {
-          // avoid cached data overriding remote data
-          if (loadedUrlRef.current !== normalizedUrl && normalizedUrl === urlRef.current) {
+          if (
+            // avoid cached data overriding remote data
+            loadedUrlRef.current !== normalizedUrl &&
+            // abort out-dated promise
+            normalizedUrl === urlRef.current
+          ) {
             setDataStatus(DataStatus.Stale);
             setData(newData);
-            loadedUrlRef.current = normalizedUrl;
             setLoading(false);
           }
         });
