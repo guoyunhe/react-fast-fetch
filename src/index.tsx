@@ -2,7 +2,6 @@ export * from './CacheStore';
 export * from './FetchProvider';
 export * from './IndexedDBStore';
 export * from './MemoryStore';
-export * from './private/FetchContext';
 export * from './StorageStore';
 export * from './Store';
 export * from './types';
