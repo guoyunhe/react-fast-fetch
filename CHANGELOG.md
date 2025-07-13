@@ -2,9 +2,11 @@
 
 ## 2.0.0 - 2025-07-12
 
+- feat!(DataStatus): removed `DataStatus` enum
 - feat!(Fetch): removed `Fetch` component
 - feat!(Store): removed `has` function for better performance
 - feat!(useFetch): removed `reloading` return, you should use `loading` return instead
+- feat!(useFetch): removed `dataStatus` return, you should use `loading` return instead
 - feat(CacheStore): new store implemented with [Cache API](https://developer.mozilla.org/docs/Web/API/Cache)
 - fix(useFetch): changed initial `loading` to `true`
 

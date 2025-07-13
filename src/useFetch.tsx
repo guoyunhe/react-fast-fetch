@@ -3,7 +3,7 @@ import { useLatestRef } from '@guoyunhe/use-latest-ref';
 import { useEffect, useRef, useState } from 'react';
 import { useFetchConfig } from './FetchConfigContext';
 import { normalizeUrl } from './normalizeUrl';
-import { DataStatus, FetchOptions } from './types';
+import { FetchOptions } from './types';
 
 export interface UseFetchReturn<T> {
   /**
@@ -14,10 +14,6 @@ export interface UseFetchReturn<T> {
    * Error thrown when fetching failed
    */
   error: any;
-  /**
-   * If the data is absent, stale, or valid
-   */
-  dataStatus: DataStatus;
   /**
    * Fetch data from remote
    */
@@ -52,7 +48,6 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   const [data, setData] = useState<T>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(true);
-  const [dataStatus, setDataStatus] = useState(DataStatus.Absent);
 
   // refresh data from remote
   const reload = useLatestCallback(async () => {
@@ -63,7 +58,6 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
       const newData = await fetcher(normalizedUrl);
       // abort out-dated promise
       if (normalizedUrl === urlRef.current) {
-        setDataStatus(DataStatus.Valid);
         setData(newData);
         setLoading(false);
         onLoadRef.current?.(urlRef.current, newData);
@@ -84,7 +78,6 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   useEffect(
     () => {
       if (!preserve) {
-        setDataStatus(DataStatus.Absent);
         setData(undefined);
       }
 
@@ -99,7 +92,6 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
             // abort out-dated promise
             normalizedUrl === urlRef.current
           ) {
-            setDataStatus(DataStatus.Stale);
             setData(newData);
             setLoading(false);
           }
@@ -123,7 +115,6 @@ export function useFetch<T>(url: string, options: FetchOptions<T> = {}): UseFetc
   return {
     data,
     error,
-    dataStatus,
     reload,
     remove,
     loading,
