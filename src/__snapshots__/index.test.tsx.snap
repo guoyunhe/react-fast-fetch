@@ -3,14 +3,6 @@
 exports[`members > should match snapshot 1`] = `
 {
   "CacheStore": [Function],
-  "DataStatus": {
-    "0": "Absent",
-    "1": "Stale",
-    "2": "Valid",
-    "Absent": 0,
-    "Stale": 1,
-    "Valid": 2,
-  },
   "FetchConfigProvider": [Function],
   "IndexedDBStore": [Function],
   "MemoryStore": [Function],

@@ -8,15 +8,6 @@ export interface FetchConfig {
   initData: Record<string, any>;
 }
 
-export enum DataStatus {
-  // Not fetched yet
-  Absent,
-  // Read from local cache
-  Stale,
-  // Fetched from remote
-  Valid,
-}
-
 export type OnLoad<T> = (url: string, data: T) => void;
 
 export interface FetchOptions<T> extends Partial<FetchConfig> {
