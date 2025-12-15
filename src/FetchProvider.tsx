@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { FetchConfig } from './FetchConfig';
 import { defaultFetcher, defaultStore, FetchContext } from './private/FetchContext';
 
